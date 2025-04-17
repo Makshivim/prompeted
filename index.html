@@ -3,125 +3,101 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromptEDU - דף הבית</title>
+  <title>PromptEDU - שאלון מדורג</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
-      direction: rtl;
-      color: #333;
+    body { font-family: Arial, sans-serif; direction: rtl; background-color: #f4f4f4; margin: 0; padding: 30px; }
+    .container { max-width: 850px; margin: auto; background-color: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    h1, h2 { text-align: center; }
+    .step { display: none; }
+    .step.active { display: block; }
+    .progressbar { display: flex; justify-content: space-between; counter-reset: step; margin: 20px 0; }
+    .progressbar li {
+      list-style: none; position: relative; text-align: center;
+      flex: 1; color: gray;
     }
-    header {
-      background: linear-gradient(90deg, #4CAF50, #66bb6a);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    .progressbar li::before {
+      content: counter(step);
+      counter-increment: step;
+      width: 30px; height: 30px; line-height: 30px;
+      border: 2px solid gray; border-radius: 50%; display: block;
+      text-align: center; margin: 0 auto 10px;
     }
-    header h1 {
-      font-size: 2.8em;
-      margin: 0;
-    }
-    nav {
-      margin-top: 15px;
-    }
-    nav a {
-      margin: 0 10px;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .container p {
-      font-size: 1.2em;
-      text-align: center;
-      line-height: 1.7em;
-    }
-    .button {
-      display: block;
-      width: fit-content;
-      margin: 40px auto;
-      padding: 15px 32px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 10px;
-      text-decoration: none;
-      cursor: pointer;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      transition: background-color 0.3s ease;
-    }
-    .button:hover {
-      background-color: #388e3c;
-    }
-    .video-container {
-      text-align: center;
-      margin-top: 60px;
-    }
-    .video-container h2 {
-      font-size: 1.6em;
-      margin-bottom: 20px;
-    }
-    iframe {
-      width: 100%;
-      max-width: 800px;
-      height: 450px;
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    @media (max-width: 600px) {
-      .container {
-        margin: 20px;
-        padding: 20px;
-      }
-      header h1 {
-        font-size: 2em;
-      }
-      .button {
-        width: 90%;
-        font-size: 16px;
-      }
-      iframe {
-        height: 220px;
-      }
-    }
+    .progressbar li.active { color: #4CAF50; font-weight: bold; }
+    .progressbar li.active::before { border-color: #4CAF50; background: #4CAF50; color: white; }
+    input[type="text"], textarea, select {
+      width: 100%; padding: 10px; margin: 10px 0 20px; border-radius: 6px; border: 1px solid #ccc; }
+    .example { font-size: 0.9em; color: #555; margin-top: -10px; margin-bottom: 15px; }
+    button { padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    .note { background-color: #e8f5e9; padding: 10px; border: 1px solid #c8e6c9; border-radius: 6px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>PromptEDU - מחולל מערכי שיעור חכם</h1>
-    <nav>
-      <a href="index.html">דף הבית</a>
-      <a href="form.html">שאלון</a>
-      <a href="generator.html">מחולל פרומפטים</a>
-      <a href="tools.html">כלי AI</a>
-      <a href="results.html">תוצרים</a>
-      <a href="ai-helper.html">עוזר חכם 🤖</a>
-    </nav>
-  </header>
-  <div class="container">
-    <p>ברוכים הבאים ל-PromptEDU – פלטפורמה חדשנית למורים, היוצרת מערכי שיעור אינטראקטיביים ומותאמים אישית בלחיצת כפתור.</p>
-    <p>ענו על שאלון קצר, קבלו תוצרים איכותיים (מצגות, סרטונים, משחקים) ותחוו הוראה מגוונת ומתקדמת.</p>
+<div class="container">
+  <h1>📝 שאלון סופר-מלא למורים</h1>
+  <div class="note">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</div>
+  <ul class="progressbar">
+    <li class="active">פרטים כלליים</li>
+    <li>מטרות וסוג שיעור</li>
+    <li>חומרי עזר והתאמות</li>
+    <li>סיכום ושליחה</li>
+  </ul>
 
-    <a href="form.html" class="button">🚀 התחילו את השאלון</a>
-
-    <div class="video-container">
-      <h2>🎥 סרטון הסבר קצר על המערכת</h2>
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+  <form id="teacherForm">
+    <div class="step active">
+      <h2>שלב 1: פרטים כלליים</h2>
+      <label>אני מורה ל:</label><input type="text"><div class="example">✏️ דוגמה: ביולוגיה, מתמטיקה</div>
+      <label>תיאור הכיתה:</label><textarea></textarea><div class="example">✏️ דוגמה: כיתה ז', תלמידים עם דיסלקציה</div>
+      <label>שפה מועדפת:</label><input type="text"><div class="example">✏️ דוגמה: עברית</div>
+      <button type="button" onclick="nextStep(1)">הבא</button>
     </div>
-  </div>
+
+    <div class="step">
+      <h2>שלב 2: מטרות וסוג שיעור</h2>
+      <label>כותרת השיעור:</label><input type="text">
+      <label>נושא השיעור:</label><input type="text">
+      <label>מטרות השיעור:</label><textarea></textarea><div class="example">✏️ דוגמה: הבנת שלבי מערכת העיכול</div>
+      <label>סוג התוצר הרצוי:</label>
+      <select>
+        <option>מצגת</option>
+        <option>סרטון</option>
+        <option>אינפוגרפיקה</option>
+        <option>חידון</option>
+      </select>
+      <button type="button" onclick="prevStep(0)">הקודם</button>
+      <button type="button" onclick="nextStep(2)">הבא</button>
+    </div>
+
+    <div class="step">
+      <h2>שלב 3: חומרי עזר והתאמות</h2>
+      <label>חומרי עזר:</label><textarea></textarea><div class="example">✏️ דוגמה: מצגת, סרטון, אינפוגרפיקה</div>
+      <label>התאמות נדרשות:</label><textarea></textarea><div class="example">✏️ דוגמה: פישוט שפה, חלוקה למקטעים</div>
+      <button type="button" onclick="prevStep(1)">הקודם</button>
+      <button type="button" onclick="nextStep(3)">הבא</button>
+    </div>
+
+    <div class="step">
+      <h2>שלב 4: סיכום ושליחה</h2>
+      <label>האם יש הערות נוספות?</label><textarea></textarea>
+      <button type="button" onclick="prevStep(2)">הקודם</button>
+      <button type="submit">שלח שאלון</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  let current = 0;
+  const steps = document.querySelectorAll('.step');
+  const indicators = document.querySelectorAll('.progressbar li');
+
+  function showStep(n) {
+    steps.forEach(s => s.classList.remove('active'));
+    indicators.forEach(i => i.classList.remove('active'));
+    steps[n].classList.add('active');
+    for (let i = 0; i <= n; i++) indicators[i].classList.add('active');
+  }
+  function nextStep(n) { current = n; showStep(current); }
+  function prevStep(n) { current = n; showStep(current); }
+</script>
 </body>
 </html>
