@@ -3,41 +3,107 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>מחולל פרומפטים אוטומטי</title>
+  <title>מחולל פרומפטים לפי תוצרים</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fb;
       margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
-      direction: rtl;
+      padding: 20px;
     }
-    main {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+    }
+    .prompt-box {
+      background-color: #fff;
+      padding: 20px;
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 800px;
+    }
+    .prompt-box h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #333;
+    }
+    .prompt-text {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+    .prompt-actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+    }
+    .prompt-actions a,
+    .prompt-actions button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .prompt-actions button:hover,
+    .prompt-actions a:hover {
+      background-color: #388e3c;
     }
   </style>
 </head>
 <body>
-  
-<header style="background: linear-gradient(90deg, #4CAF50, #66bb6a); color: white; padding: 20px; text-align: center;">
-  <h1>PromptEDU</h1>
-  <nav style="margin-top: 10px;">
-    <a href="index.html" style="margin: 0 10px; color: white;">דף הבית</a>
-    <a href="form.html" style="margin: 0 10px; color: white;">שאלון</a>
-    <a href="generator.html" style="margin: 0 10px; color: white;">מחולל פרומפטים</a>
-    <a href="tools.html" style="margin: 0 10px; color: white;">כלי AI</a>
-    <a href="results.html" style="margin: 0 10px; color: white;">תוצרים</a>
-  </nav>
-</header>
+  <h1>📚 הפרומפטים שלך מוכנים!</h1>
 
-  <main>
-    <h2>מחולל פרומפטים אוטומטי</h2>
-    <p>כאן ניתן יהיה להפיק פרומפטים חכמים בהתבסס על בחירות קודמות.</p>
-  </main>
+  <div class="prompt-box">
+    <h2>🎬 סרטון ב־Sora</h2>
+    <div class="prompt-text" id="prompt1">
+      Create a 2-minute educational video about the digestive system
+      for 7th-grade students with dyslexia. Use clear narration,
+      bright visuals, and include a short text summary at the end.
+    </div>
+    <div class="prompt-actions">
+      <button onclick="copyPrompt('prompt1')">📋 העתק פרומפט</button>
+      <a href="https://www.sora.com" target="_blank">🚀 פתח את Sora</a>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <h2>🖼️ מצגת ב־Gamma</h2>
+    <div class="prompt-text" id="prompt2">
+      Create an interactive presentation on the human digestive system
+      for middle school students. Include visuals, key facts,
+      and 3 review questions.
+    </div>
+    <div class="prompt-actions">
+      <button onclick="copyPrompt('prompt2')">📋 העתק פרומפט</button>
+      <a href="https://www.gamma.app" target="_blank">🚀 פתח את Gamma</a>
+    </div>
+  </div>
+
+  <div class="prompt-box">
+    <h2>🎮 משחק דיגיטלי ב־Kahoot</h2>
+    <div class="prompt-text" id="prompt3">
+      Create a multiple-choice quiz with 5 questions
+      for 7th grade students about the stages of the human digestive process.
+    </div>
+    <div class="prompt-actions">
+      <button onclick="copyPrompt('prompt3')">📋 העתק פרומפט</button>
+      <a href="https://www.kahoot.com" target="_blank">🚀 פתח את Kahoot</a>
+    </div>
+  </div>
+
+<script>
+  function copyPrompt(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("הפרומפט הועתק ✔");
+    });
+  }
+</script>
 </body>
 </html>
