@@ -46,7 +46,6 @@
   <form id="teacherForm">
     <div class="step active">
       <h2>שלב 1: פרטים כלליים</h2>
-<button class="ai-suggest" onclick="autofillStep(1)">🤖 עזרה במילוי שלב 1</button>
       <label>אני מורה ל:</label><input type="text"><div class="example">✏️ דוגמה: ביולוגיה, מתמטיקה</div>
       <label>תיאור הכיתה:</label><textarea></textarea><div class="example">✏️ דוגמה: כיתה ז', תלמידים עם דיסלקציה</div>
       <label>שפה מועדפת:</label><input type="text"><div class="example">✏️ דוגמה: עברית</div>
@@ -100,30 +99,5 @@
   function nextStep(n) { current = n; showStep(current); }
   function prevStep(n) { current = n; showStep(current); }
 </script>
-
-<script>
-  function autofillStep(step) {
-    switch(step) {
-      case 1:
-        document.getElementById('teacher').value = "מדעים";
-        document.getElementById('classDescription').value = "כיתה ז', תלמידים עם קושי בריכוז";
-        document.getElementById('language').value = "עברית";
-        break;
-      case 2:
-        document.getElementById('lessonTitle').value = "היכרות עם מושגי אנרגיה";
-        document.getElementById('lessonTopic').value = "אנרגיה ותנועה";
-        document.getElementById('lessonGoals').value = "לזהות מקורות אנרגיה שונים ולהבין חוק שימור אנרגיה";
-        break;
-      case 3:
-        document.getElementById('productType').value = "סרטון";
-        document.getElementById('productExplanation').value = "הסבר ויזואלי כולל דוגמאות והנפשות";
-        break;
-      case 4:
-        document.getElementById('additionalInfo').value = "התלמידים אוהבים קטעי וידאו קצרים. עדיף חומר אינטראקטיבי.";
-        break;
-    }
-  }
-</script>
-
 </body>
 </html>
