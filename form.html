@@ -2,15 +2,16 @@
 <!DOCTYPE html>
 <html lang="he">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>שאלון סופר-מלא למורים</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <h1>שאלון סופר-מלא למורים 📝</h1>
-    <p class="info-banner">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+    <h1>📝 שאלון סופר-מלא למורים</h1>
+    <p class="info">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+    <a href="index.html" class="home-link">🔙 חזרה לדף הבית</a>
 
-    <div>
+    <div class="step-navigation">
         <span class="step active-step">1</span>
         <span class="step">2</span>
         <span class="step">3</span>
@@ -18,19 +19,20 @@
     </div>
 
     <h2>שלב 1: פרטים כלליים</h2>
-    <form>
-        <label>אני מורה ל:</label><br>
-        <input type="text" placeholder="לדוגמה: ביולוגיה, מתמטיקה"><br><br>
 
-        <label>תיאור הכיתה:</label><br>
-        <textarea placeholder="לדוגמה: כיתה ז', תלמידים עם דיסלקציה"></textarea><br><br>
+    <form id="teacher-form">
+        <label>אני מורה ל:</label>
+        <input type="text" name="subject" placeholder="לדוגמה: ביולוגיה, מתמטיקה" />
 
-        <label>שפה מועדפת:</label><br>
-        <input type="text" placeholder="לדוגמה: עברית"><br><br>
+        <label>תיאור הכיתה:</label>
+        <textarea name="class_description" placeholder="לדוגמה: כיתה ז׳, תלמידים עם דיסלקציה"></textarea>
+
+        <label>שפה מועדפת:</label>
+        <input type="text" name="language" placeholder="לדוגמה: עברית" />
 
         <button type="submit">הבא</button>
     </form>
 
-    <button class="ai-suggest">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
+    <button type="button" class="ai-suggest">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
 </body>
 </html>
