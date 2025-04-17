@@ -30,6 +30,11 @@
     button { padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
     button:hover { background-color: #45a049; }
     .note { background-color: #e8f5e9; padding: 10px; border: 1px solid #c8e6c9; border-radius: 6px; margin-bottom: 20px; }
+    .ai-helper-btn {
+      display: block; background-color: #66bb6a; text-align: center;
+      padding: 10px; border-radius: 8px; margin: 40px auto 0;
+      font-weight: bold; width: fit-content;
+    }
   </style>
 </head>
 <body>
@@ -83,6 +88,8 @@
       <button type="submit">שלח שאלון</button>
     </div>
   </form>
+
+  <button class="ai-helper-btn" onclick="autoFill()">אני לא בטוח – עזרו לי לבחור תוצרים 🤖</button>
 </div>
 
 <script>
@@ -98,6 +105,27 @@
   }
   function nextStep(n) { current = n; showStep(current); }
   function prevStep(n) { current = n; showStep(current); }
+
+  function autoFill() {
+    const step = steps[current];
+    const inputs = step.querySelectorAll("input, textarea, select");
+
+    if (current === 0) {
+      inputs[0].value = "מדעים";
+      inputs[1].value = "כיתה ה', תלמידים סקרנים";
+      inputs[2].value = "עברית";
+    } else if (current === 1) {
+      inputs[0].value = "מבוא למערכת העיכול";
+      inputs[1].value = "מערכת העיכול";
+      inputs[2].value = "הכרת איברי המערכת והבנת תפקידיהם";
+      inputs[3].value = "מצגת";
+    } else if (current === 2) {
+      inputs[0].value = "מצגת בנושא מערכת העיכול";
+      inputs[1].value = "פישוט שפה, הדגמות חזותיות";
+    } else if (current === 3) {
+      inputs[0].value = "אין כרגע";
+    }
+  }
 </script>
 </body>
 </html>
