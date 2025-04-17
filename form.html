@@ -4,21 +4,13 @@
 <head>
   <meta charset="UTF-8" />
   <title>שאלון סופר-מלא למורים</title>
-  <style>
-    body { font-family: Arial; direction: rtl; background-color: #f5fcff; padding: 20px; }
-    h1 { color: #2e7d32; }
-    .step { display: inline-block; width: 50px; height: 50px; border: 2px solid #ccc; border-radius: 50%; text-align: center; line-height: 46px; margin: 10px; }
-    .active-step { border-color: #4caf50; background-color: #c8e6c9; }
-    .form-section { margin-bottom: 20px; }
-    .home-link { margin-top: 20px; display: inline-block; color: #2e7d32; font-weight: bold; text-decoration: underline; cursor: pointer; }
-    .ai-suggest { margin-top: 40px; background-color: #81c784; color: white; padding: 12px; font-size: 18px; border: none; border-radius: 10px; cursor: pointer; }
-    input, textarea { width: 100%; padding: 8px; margin: 8px 0; }
-    .example { font-size: 12px; color: #777; }
-  </style>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <h1>📝 שאלון סופר-מלא למורים</h1>
-  <p style="background-color:#e8f5e9; padding:10px;">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+  <p class="instruction">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+
+  <a href="index.html" class="home-link">חזרה לדף הבית</a>
 
   <div>
     <span class="step active-step">1</span>
@@ -30,38 +22,31 @@
   <h2>שלב 1: פרטים כלליים</h2>
 
   <div class="form-section">
-    <label>אני מורה ל:</label>
-    <input type="text" id="subject" />
-    <div class="example">דוגמה: ביולוגיה, מתמטיקה</div>
+    <label for="teacher">אני מורה ל:</label>
+    <input type="text" id="teacher" placeholder="לדוגמה: ביולוגיה, מתמטיקה">
   </div>
 
   <div class="form-section">
-    <label>תיאור הכיתה:</label>
-    <textarea id="classDesc"></textarea>
-    <div class="example">דוגמה: כיתה ז', תלמידים עם דיסלקציה</div>
+    <label for="class">תיאור הכיתה:</label>
+    <textarea id="class" rows="2" placeholder="לדוגמה: כיתה ז׳, תלמידים עם דיסלקציה"></textarea>
   </div>
 
   <div class="form-section">
-    <label>שפה מועדפת:</label>
-    <input type="text" id="lang" />
-    <div class="example">דוגמה: עברית</div>
+    <label for="language">שפה מועדפת:</label>
+    <input type="text" id="language" placeholder="לדוגמה: עברית">
   </div>
 
-  <button onclick="nextStep()">הבא</button>
-
-  <button class="ai-suggest" onclick="fillSuggestions()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
-
-  <br><a href="index.html" class="home-link">חזרה לדף הבית</a>
+  <button class="ai-suggest" onclick="suggestAI()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
 
   <script>
-    function fillSuggestions() {
-      document.getElementById('subject').value = "מדעים";
-      document.getElementById('classDesc').value = "כיתה ז', תלמידים עם קושי בריכוז";
-      document.getElementById('lang').value = "עברית";
-      alert("מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך 🎉");
-    }
-    function nextStep() {
-      alert("מעבר לשלב הבא (עדיין לא ממומש)");
+    function suggestAI() {
+      const subject = document.getElementById('teacher').value;
+      const classroom = document.getElementById('class').value;
+      const language = document.getElementById('language').value;
+
+      const prompt = `אני מורה ל-${subject}, לכיתה ${classroom}, בשפה ${language}. אלו תוצרים כדאי לי לבחור?`;
+
+      alert("מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך\n\n" + prompt);
     }
   </script>
 </body>
