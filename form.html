@@ -2,52 +2,35 @@
 <!DOCTYPE html>
 <html lang="he">
 <head>
-  <meta charset="UTF-8" />
-  <title>שאלון סופר-מלא למורים</title>
-  <link rel="stylesheet" href="assets/style.css">
+    <meta charset="UTF-8">
+    <title>שאלון סופר-מלא למורים</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <h1>📝 שאלון סופר-מלא למורים</h1>
-  <p class="instruction">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+    <h1>שאלון סופר-מלא למורים 📝</h1>
+    <p class="info-banner">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
 
-  <a href="index.html" class="home-link">חזרה לדף הבית</a>
+    <div>
+        <span class="step active-step">1</span>
+        <span class="step">2</span>
+        <span class="step">3</span>
+        <span class="step">4</span>
+    </div>
 
-  <div>
-    <span class="step active-step">1</span>
-    <span class="step">2</span>
-    <span class="step">3</span>
-    <span class="step">4</span>
-  </div>
+    <h2>שלב 1: פרטים כלליים</h2>
+    <form>
+        <label>אני מורה ל:</label><br>
+        <input type="text" placeholder="לדוגמה: ביולוגיה, מתמטיקה"><br><br>
 
-  <h2>שלב 1: פרטים כלליים</h2>
+        <label>תיאור הכיתה:</label><br>
+        <textarea placeholder="לדוגמה: כיתה ז', תלמידים עם דיסלקציה"></textarea><br><br>
 
-  <div class="form-section">
-    <label for="teacher">אני מורה ל:</label>
-    <input type="text" id="teacher" placeholder="לדוגמה: ביולוגיה, מתמטיקה">
-  </div>
+        <label>שפה מועדפת:</label><br>
+        <input type="text" placeholder="לדוגמה: עברית"><br><br>
 
-  <div class="form-section">
-    <label for="class">תיאור הכיתה:</label>
-    <textarea id="class" rows="2" placeholder="לדוגמה: כיתה ז׳, תלמידים עם דיסלקציה"></textarea>
-  </div>
+        <button type="submit">הבא</button>
+    </form>
 
-  <div class="form-section">
-    <label for="language">שפה מועדפת:</label>
-    <input type="text" id="language" placeholder="לדוגמה: עברית">
-  </div>
-
-  <button class="ai-suggest" onclick="suggestAI()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
-
-  <script>
-    function suggestAI() {
-      const subject = document.getElementById('teacher').value;
-      const classroom = document.getElementById('class').value;
-      const language = document.getElementById('language').value;
-
-      const prompt = `אני מורה ל-${subject}, לכיתה ${classroom}, בשפה ${language}. אלו תוצרים כדאי לי לבחור?`;
-
-      alert("מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך\n\n" + prompt);
-    }
-  </script>
+    <button class="ai-suggest">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
 </body>
 </html>
