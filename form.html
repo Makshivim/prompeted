@@ -2,155 +2,143 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+  <link rel="stylesheet" href="assets/style.css">
   <meta charset="UTF-8">
-  <title>שאלון סופר-מלא למורים</title>
+  <title>PromptEDU - שאלון מדורג</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      direction: rtl;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 30px;
-    }
-    .container {
-      max-width: 850px;
-      margin: auto;
-      background-color: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    .step {
-      display: none;
-    }
-    .step.active {
-      display: block;
-    }
-    .progressbar {
-      display: flex;
-      justify-content: space-between;
-      counter-reset: step;
-      margin: 20px 0;
-    }
+    body { font-family: Arial, sans-serif; direction: rtl; background-color: #f4f4f4; margin: 0; padding: 30px; }
+    .container { max-width: 850px; margin: auto; background-color: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    h1, h2 { text-align: center; }
+    .step { display: none; }
+    .step.active { display: block; }
+    .progressbar { display: flex; justify-content: space-between; counter-reset: step; margin: 20px 0; }
     .progressbar li {
-      list-style: none;
-      position: relative;
-      text-align: center;
-      flex: 1;
-      color: gray;
+      list-style: none; position: relative; text-align: center;
+      flex: 1; color: gray;
     }
-    .progressbar li:before {
+    .progressbar li::before {
       content: counter(step);
       counter-increment: step;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
-      border: 2px solid gray;
-      border-radius: 50%;
-      display: block;
-      text-align: center;
-      margin: 0 auto 10px;
+      width: 30px; height: 30px; line-height: 30px;
+      border: 2px solid gray; border-radius: 50%; display: block;
+      text-align: center; margin: 0 auto 10px;
     }
-    .progressbar li.active {
-      color: #4CAF50;
-      font-weight: bold;
-    }
-    .progressbar li.active:before {
-      border-color: #4CAF50;
-      background: #4CAF50;
-      color: white;
-    }
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0 20px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    .example {
-      font-size: 0.9em;
-      color: #555;
-      margin-top: -10px;
-      margin-bottom: 15px;
-    }
-    button {
-      padding: 10px 20px;
-      margin: 5px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .note {
-      background-color: #e8f5e9;
-      padding: 10px;
-      border: 1px solid #c8e6c9;
-      border-radius: 6px;
-      margin-bottom: 20px;
-    }
-    #ai-helper-button {
-      background-color: #69a965;
-      font-size: 18px;
-      font-weight: bold;
-      padding: 10px 30px;
-      border-radius: 8px;
-      text-align: center;
-      margin: 20px auto;
-      display: block;
-      cursor: pointer;
-    }
+    .progressbar li.active { color: #4CAF50; font-weight: bold; }
+    .progressbar li.active::before { border-color: #4CAF50; background: #4CAF50; color: white; }
+    input[type="text"], textarea, select {
+      width: 100%; padding: 10px; margin: 10px 0 20px; border-radius: 6px; border: 1px solid #ccc; }
+    .example { font-size: 0.9em; color: #555; margin-top: -10px; margin-bottom: 15px; }
+    button { padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    .note { background-color: #e8f5e9; padding: 10px; border: 1px solid #c8e6c9; border-radius: 6px; margin-bottom: 20px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>שאלון סופר-מלא למורים 📝</h1>
-    <p class="note">כל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+<div class="container">
+  <h1>📝 שאלון סופר-מלא למורים</h1>
+  <div class="note">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</div>
+  <ul class="progressbar">
+    <li class="active">פרטים כלליים</li>
+    <li>מטרות וסוג שיעור</li>
+    <li>חומרי עזר והתאמות</li>
+    <li>סיכום ושליחה</li>
+  </ul>
 
-    <ul class="progressbar">
-      <li class="active">1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-    </ul>
-
+  <form id="teacherForm">
     <div class="step active">
       <h2>שלב 1: פרטים כלליים</h2>
-      <label>אני מורה ל:
-        <input type="text" placeholder="לדוגמה: ביולוגיה, מתמטיקה">
-      </label>
-      <div class="example">דוגמה: מתמטיקה, ביולוגיה</div>
-
-      <label>תיאור הכיתה:
-        <textarea placeholder="לדוגמה: כיתה ז׳, תלמידים עם דיסלקציה"></textarea>
-      </label>
-      <div class="example">דוגמה: כיתה ז׳, תלמידים עם דיסלקציה</div>
-
-      <label>שפה מועדפת:
-        <input type="text" placeholder="לדוגמה: עברית">
-      </label>
-      <div class="example">דוגמה: עברית</div>
-
-      <button onclick="nextStep()">הבא</button>
+      <label>אני מורה ל:</label><input type="text"><div class="example">✏️ דוגמה: ביולוגיה, מתמטיקה</div>
+      <label>תיאור הכיתה:</label><textarea></textarea><div class="example">✏️ דוגמה: כיתה ז', תלמידים עם דיסלקציה</div>
+      <label>שפה מועדפת:</label><input type="text"><div class="example">✏️ דוגמה: עברית</div>
+      <button type="button" onclick="nextStep(1)">הבא</button>
     </div>
 
-    <div id="ai-helper-button" onclick="aiHelper()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</div>
-  </div>
+    <div class="step">
+      <h2>שלב 2: מטרות וסוג שיעור</h2>
+      <label>כותרת השיעור:</label><input type="text">
+      <label>נושא השיעור:</label><input type="text">
+      <label>מטרות השיעור:</label><textarea></textarea><div class="example">✏️ דוגמה: הבנת שלבי מערכת העיכול</div>
+      <label>סוג התוצר הרצוי:</label>
+      <select>
+        <option>מצגת</option>
+        <option>סרטון</option>
+        <option>אינפוגרפיקה</option>
+        <option>חידון</option>
+      </select>
+      <button type="button" onclick="prevStep(0)">הקודם</button>
+      <button type="button" onclick="nextStep(2)">הבא</button>
+    </div>
 
-  <script>
-    function nextStep() {
-      alert('המשך לשלב הבא');
+    <div class="step">
+      <h2>שלב 3: חומרי עזר והתאמות</h2>
+      <label>חומרי עזר:</label><textarea></textarea><div class="example">✏️ דוגמה: מצגת, סרטון, אינפוגרפיקה</div>
+      <label>התאמות נדרשות:</label><textarea></textarea><div class="example">✏️ דוגמה: פישוט שפה, חלוקה למקטעים</div>
+      <button type="button" onclick="prevStep(1)">הקודם</button>
+      <button type="button" onclick="nextStep(3)">הבא</button>
+    </div>
+
+    <div class="step">
+      <h2>שלב 4: סיכום ושליחה</h2>
+      <label>האם יש הערות נוספות?</label><textarea></textarea>
+      <button type="button" onclick="prevStep(2)">הקודם</button>
+      <button type="submit">שלח שאלון</button>
+    </div>
+  
+<div style="text-align: center; margin: 30px 0;">
+  <button onclick="suggestAI()" class="button">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
+</div>
+
+</form>
+</div>
+
+<script>
+  let current = 0;
+  const steps = document.querySelectorAll('.step');
+  const indicators = document.querySelectorAll('.progressbar li');
+
+  function showStep(n) {
+    steps.forEach(s => s.classList.remove('active'));
+    indicators.forEach(i => i.classList.remove('active'));
+    steps[n].classList.add('active');
+    for (let i = 0; i <= n; i++) indicators[i].classList.add('active');
+  }
+  function nextStep(n) { current = n; showStep(current); }
+  function prevStep(n) { current = n; showStep(current); }
+</script>
+
+<script>
+  function suggestAI() {
+    const form = document.getElementById('teacherForm');
+    const subject = form.querySelector('input[type=text]');
+    const textareas = form.querySelectorAll('textarea');
+    const inputs = form.querySelectorAll('input[type=text]');
+    const selects = form.querySelectorAll('select');
+
+    let detected = subject.value.toLowerCase();
+
+    if (detected.includes("פילוסופיה")) {
+      inputs[1].value = "כיתה ז'";
+      inputs[2].value = "מבוא לערכים";
+      inputs[3].value = "דיון מוסרי בפילוסופיה יומיומית";
+      textareas[1].value = "להעלות דיון על ערכים דרך סיטואציות מחיי היומיום";
+      selects[0].value = "משחק";
+    } else if (detected.includes("מדעים") || detected.includes("פיזיקה")) {
+      inputs[1].value = "כיתה ח'";
+      inputs[2].value = "אנרגיה ותנועה";
+      inputs[3].value = "חוקי ניוטון";
+      textareas[1].value = "להסביר את עקרונות ניוטון דרך ניסוי והדגמה";
+      selects[0].value = "סרטון";
+    } else {
+      inputs[1].value = "כיתה ו'";
+      inputs[2].value = "היכרות עם מושג";
+      inputs[3].value = "שיעור מבוא";
+      textareas[1].value = "הצגת הנושא בצורה ויזואלית וחווייתית";
+      selects[0].value = "מצגת";
     }
 
-    function aiHelper() {
-      alert('כאן יופעל מילוי אוטומטי מבוסס בינה מלאכותית בהתאם לשלב');
-    }
-  </script>
+    alert("🎉 מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
+  }
+</script>
+
 </body>
 </html>
