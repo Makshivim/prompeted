@@ -3,27 +3,125 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PromptEDU - דף הבית</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+      direction: rtl;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #4CAF50, #66bb6a);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      font-size: 2.8em;
+      margin: 0;
+    }
+    nav {
+      margin-top: 15px;
+    }
+    nav a {
+      margin: 0 10px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .container p {
+      font-size: 1.2em;
+      text-align: center;
+      line-height: 1.7em;
+    }
+    .button {
+      display: block;
+      width: fit-content;
+      margin: 40px auto;
+      padding: 15px 32px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #388e3c;
+    }
+    .video-container {
+      text-align: center;
+      margin-top: 60px;
+    }
+    .video-container h2 {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+      header h1 {
+        font-size: 2em;
+      }
+      .button {
+        width: 90%;
+        font-size: 16px;
+      }
+      iframe {
+        height: 220px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>PromptEDU</h1>
+  <header>
+    <h1>PromptEDU - מחולל מערכי שיעור חכם</h1>
     <nav>
       <a href="index.html">דף הבית</a>
       <a href="form.html">שאלון</a>
       <a href="generator.html">מחולל פרומפטים</a>
       <a href="tools.html">כלי AI</a>
       <a href="results.html">תוצרים</a>
-      <a href="ai-helper.html">עזרו לי לבחור תוצרים 🤖</a>
+      <a href="ai-helper.html">עוזר חכם 🤖</a>
     </nav>
+  </header>
+  <div class="container">
+    <p>ברוכים הבאים ל-PromptEDU – פלטפורמה חדשנית למורים, היוצרת מערכי שיעור אינטראקטיביים ומותאמים אישית בלחיצת כפתור.</p>
+    <p>ענו על שאלון קצר, קבלו תוצרים איכותיים (מצגות, סרטונים, משחקים) ותחוו הוראה מגוונת ומתקדמת.</p>
 
-    <p>
-      ברוכים הבאים ל־<strong>PromptEDU</strong> – פלטפורמה חדשנית למורים, היוצרת מערכי שיעור אינטראקטיביים ומותאמים אישית בלחיצת כפתור.
-      <br>ענו על שאלון קצר, קבלו תוצרים איכותיים (מצגות, סרטונים, משחקים) ותחוו הוראה מגוונת ומתקדמת.
-    </p>
+    <a href="form.html" class="button">🚀 התחילו את השאלון</a>
 
-    <a class="button" href="form.html">🚀 התחילו את השאלון</a>
+    <div class="video-container">
+      <h2>🎥 סרטון הסבר קצר על המערכת</h2>
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+    </div>
   </div>
 </body>
 </html>
