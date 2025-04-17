@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
+  <link rel="stylesheet" href="assets/style.css">
   <meta charset="UTF-8">
   <title>PromptEDU - שאלון מדורג</title>
   <style>
@@ -30,11 +31,6 @@
     button { padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
     button:hover { background-color: #45a049; }
     .note { background-color: #e8f5e9; padding: 10px; border: 1px solid #c8e6c9; border-radius: 6px; margin-bottom: 20px; }
-    .ai-helper-btn {
-      display: block; background-color: #66bb6a; text-align: center;
-      padding: 10px; border-radius: 8px; margin: 40px auto 0;
-      font-weight: bold; width: fit-content;
-    }
   </style>
 </head>
 <body>
@@ -87,9 +83,12 @@
       <button type="button" onclick="prevStep(2)">הקודם</button>
       <button type="submit">שלח שאלון</button>
     </div>
-  </form>
+  
+<div style="text-align: center; margin: 30px 0;">
+  <button onclick="suggestAI()" class="button">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
+</div>
 
-  <button class="ai-helper-btn" onclick="autoFill()">אני לא בטוח – עזרו לי לבחור תוצרים 🤖</button>
+</form>
 </div>
 
 <script>
@@ -105,27 +104,41 @@
   }
   function nextStep(n) { current = n; showStep(current); }
   function prevStep(n) { current = n; showStep(current); }
+</script>
 
-  function autoFill() {
-    const step = steps[current];
-    const inputs = step.querySelectorAll("input, textarea, select");
+<script>
+  function suggestAI() {
+    const form = document.getElementById('teacherForm');
+    const subject = form.querySelector('input[type=text]');
+    const textareas = form.querySelectorAll('textarea');
+    const inputs = form.querySelectorAll('input[type=text]');
+    const selects = form.querySelectorAll('select');
 
-    if (current === 0) {
-      inputs[0].value = "מדעים";
-      inputs[1].value = "כיתה ה', תלמידים סקרנים";
-      inputs[2].value = "עברית";
-    } else if (current === 1) {
-      inputs[0].value = "מבוא למערכת העיכול";
-      inputs[1].value = "מערכת העיכול";
-      inputs[2].value = "הכרת איברי המערכת והבנת תפקידיהם";
-      inputs[3].value = "מצגת";
-    } else if (current === 2) {
-      inputs[0].value = "מצגת בנושא מערכת העיכול";
-      inputs[1].value = "פישוט שפה, הדגמות חזותיות";
-    } else if (current === 3) {
-      inputs[0].value = "אין כרגע";
+    let detected = subject.value.toLowerCase();
+
+    if (detected.includes("פילוסופיה")) {
+      inputs[1].value = "כיתה ז'";
+      inputs[2].value = "מבוא לערכים";
+      inputs[3].value = "דיון מוסרי בפילוסופיה יומיומית";
+      textareas[1].value = "להעלות דיון על ערכים דרך סיטואציות מחיי היומיום";
+      selects[0].value = "משחק";
+    } else if (detected.includes("מדעים") || detected.includes("פיזיקה")) {
+      inputs[1].value = "כיתה ח'";
+      inputs[2].value = "אנרגיה ותנועה";
+      inputs[3].value = "חוקי ניוטון";
+      textareas[1].value = "להסביר את עקרונות ניוטון דרך ניסוי והדגמה";
+      selects[0].value = "סרטון";
+    } else {
+      inputs[1].value = "כיתה ו'";
+      inputs[2].value = "היכרות עם מושג";
+      inputs[3].value = "שיעור מבוא";
+      textareas[1].value = "הצגת הנושא בצורה ויזואלית וחווייתית";
+      selects[0].value = "מצגת";
     }
+
+    alert("🎉 מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
   }
 </script>
+
 </body>
 </html>
