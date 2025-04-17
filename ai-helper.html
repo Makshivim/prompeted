@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>עוזר בינה מלאכותית - PromptEDU</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    label { display: block; margin: 10px 0 5px; }
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+    #output {
+      white-space: pre-wrap;
+      background: #eef;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🤖 עוזר חכם לבחירת תוצרים</h1>
+  <p>הכניסו תחום לימוד, גיל כיתה ותיאור כללי – וקבלו המלצה מהבינה המלאכותית.</p>
+
+  <label>🔑 הכנס את ה־API Key שלך (רק לשימוש מקומי):</label>
+  <input type="text" id="apiKey" placeholder="sk-..." />
+
+  <label>🧠 תחום לימוד:</label>
+  <input type="text" id="subject" placeholder="למשל: פילוסופיה" />
+
+  <label>🎓 גיל או כיתה:</label>
+  <input type="text" id="grade" placeholder="למשל: כיתה ז'" />
+
+  <label>🎯 מה אתה רוצה ללמד (אפשר להשאיר ריק):</label>
+  <textarea id="goal" rows="4"></textarea>
+
+  <button class="button" onclick="getAIRecommendation()">📩 קבל המלצה מבינה מלאכותית</button>
+
+  <div id="output"></div>
+</div>
+
+<script>
+  async function getAIRecommendation() {
+    const apiKey = document.getElementById("apiKey").value.trim();
+    const subject = document.getElementById("subject").value;
+    const grade = document.getElementById("grade").value;
+    const goal = document.getElementById("goal").value;
+
+    if (!apiKey || !subject || !grade) {
+      alert("יש למלא את ה־API KEY, התחום והכיתה");
+      return;
+    }
+
+    const prompt = `אני מורה ל${subject} עבור ${grade}. ${
+      goal ? "מטרת השיעור שלי: " + goal + "." : ""
+    } אילו תוצרים דיגיטליים אתה ממליץ לי להשתמש בהם (כגון מצגת, סרטון, משחק)? פרט גם מטרת שיעור מוצעת וכלים מתאימים.`;
+
+    const responseDiv = document.getElementById("output");
+    responseDiv.innerHTML = "⏳ מבקש המלצה מ־GPT...";
+
+    try {
+      const res = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: prompt }],
+        }),
+      });
+
+      const data = await res.json();
+      if (data.choices && data.choices.length > 0) {
+        responseDiv.innerHTML = "🎯 המלצה:
+
+" + data.choices[0].message.content;
+      } else {
+        responseDiv.innerHTML = "⚠️ לא התקבלה תשובה מהשרת.";
+      }
+    } catch (error) {
+      responseDiv.innerHTML = "❌ שגיאה: " + error.message;
+    }
+  }
+</script>
+</body>
+</html>

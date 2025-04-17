@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <title>בחירת כלי ליצירת תוצר</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f9f9f9; direction: rtl; padding: 30px; }
+    .container { max-width: 800px; margin: auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1, h2 { text-align: center; }
+    label { display: block; margin: 10px 0; }
+    select, button { padding: 10px; margin-top: 10px; width: 100%; border-radius: 6px; border: 1px solid #ccc; }
+    .tool-box { margin-top: 20px; padding: 15px; background-color: #eef; border-radius: 6px; display: none; }
+    a.button { display: inline-block; margin-top: 10px; background-color: #4CAF50; color: white; padding: 8px 14px; text-decoration: none; border-radius: 5px; }
+    a.button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 התאמת הכלי הטכנולוגי לתוצר</h1>
+    <label for="outputType">איזה סוג תוצר תרצה ליצור?</label>
+    <select id="outputType" onchange="showTool()">
+      <option value="">בחר תוצר...</option>
+      <option value="gamma">מצגת</option>
+      <option value="sora">סרטון</option>
+      <option value="infographic">אינפוגרפיקה</option>
+    </select>
+
+    <div id="gamma" class="tool-box">
+      <h2>🖼️ מצגת ב-Gamma</h2>
+      <p>צור מצגת בנושא מערכת העיכול הכוללת פתיחה חווייתית, תוכן חזותי ברור לתלמידי כיתה ז', ושקופית סיכום. יש להתאים את השפה לתלמידים עם לקויות למידה.</p>
+      <a class="button" href="https://gamma.app" target="_blank">פתח ב-Gamma</a>
+    </div>
+
+    <div id="sora" class="tool-box">
+      <h2>🎬 סרטון הסבר ב-Sora</h2>
+      <p>צור סרטון בן דקה על תהליך העיכול עם קריינות פשוטה, קטעי וידאו, מוזיקת רקע מרגיעה והמחשה חזותית ברורה לילדים עם ADHD.</p>
+      <a class="button" href="https://sora.co" target="_blank">פתח ב-Sora</a>
+    </div>
+
+    <div id="infographic" class="tool-box">
+      <h2>📊 אינפוגרפיקה ב-Canva</h2>
+      <p>צור אינפוגרפיקה צבעונית המציגה את שלבי מערכת העיכול בצורה ויזואלית עם אייקונים וטקסטים פשוטים וברורים.</p>
+      <a class="button" href="https://www.canva.com/graphs/infographics/" target="_blank">פתח ב-Canva</a>
+    </div>
+  </div>
+
+  <script>
+    function showTool() {
+      const allTools = ['gamma', 'sora', 'infographic'];
+      const selected = document.getElementById('outputType').value;
+      allTools.forEach(tool => {
+        document.getElementById(tool).style.display = (tool === selected) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
