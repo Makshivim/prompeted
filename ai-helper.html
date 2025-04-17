@@ -2,95 +2,101 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>עוזר בינה מלאכותית - PromptEDU</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8" />
+  <title>עוזר חכם לתכנון שיעור</title>
   <style>
-    label { display: block; margin: 10px 0 5px; }
-    textarea, input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-bottom: 15px;
+    body { font-family: Arial; background: #eefafc; padding: 2em; direction: rtl; }
+    h1 { color: #2e7d32; }
+    .input-group { margin-bottom: 1.5em; }
+    label { display: block; margin-bottom: 0.5em; font-weight: bold; }
+    input, textarea { width: 100%; padding: 0.6em; font-size: 1em; border-radius: 6px; border: 1px solid #ccc; }
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: bold;
     }
-    #output {
-      white-space: pre-wrap;
-      background: #eef;
-      padding: 15px;
-      border-radius: 10px;
+    #results {
+      background: #fff;
       border: 1px solid #ccc;
-      margin-top: 20px;
+      padding: 1em;
+      margin-top: 2em;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>🤖 עוזר חכם לבחירת תוצרים</h1>
-  <p>הכניסו תחום לימוד, גיל כיתה ותיאור כללי – וקבלו המלצה מהבינה המלאכותית.</p>
 
-  <label>🔑 הכנס את ה־API Key שלך (רק לשימוש מקומי):</label>
-  <input type="text" id="apiKey" placeholder="sk-..." />
+<h1>🧠 עוזר חכם לתכנון שיעור</h1>
 
-  <label>🧠 תחום לימוד:</label>
-  <input type="text" id="subject" placeholder="למשל: פילוסופיה" />
-
-  <label>🎓 גיל או כיתה:</label>
-  <input type="text" id="grade" placeholder="למשל: כיתה ז'" />
-
-  <label>🎯 מה אתה רוצה ללמד (אפשר להשאיר ריק):</label>
-  <textarea id="goal" rows="4"></textarea>
-
-  <button class="button" onclick="getAIRecommendation()">📩 קבל המלצה מבינה מלאכותית</button>
-
-  <div id="output"></div>
+<div class="input-group">
+  <label for="subject">תחום לימוד:</label>
+  <input type="text" id="subject" placeholder="לדוגמה: תנ"ך, פיזיקה, פילוסופיה" />
 </div>
 
+<div class="input-group">
+  <label for="grade">גיל/כיתה:</label>
+  <input type="text" id="grade" placeholder="לדוגמה: כיתה ז'" />
+</div>
+
+<div class="input-group">
+  <label for="goal">מטרה כללית (רשות):</label>
+  <textarea id="goal" rows="3"></textarea>
+</div>
+
+<button class="button" onclick="getSuggestion()">📩 קבל המלצה</button>
+
+<div id="results"></div>
+
 <script>
-  async function getAIRecommendation() {
-    const apiKey = document.getElementById("apiKey").value.trim();
+  async function getSuggestion() {
     const subject = document.getElementById("subject").value;
     const grade = document.getElementById("grade").value;
     const goal = document.getElementById("goal").value;
+    const resultsDiv = document.getElementById("results");
 
-    if (!apiKey || !subject || !grade) {
-      alert("יש למלא את ה־API KEY, התחום והכיתה");
+    if (!subject || !grade) {
+      alert("נא למלא לפחות תחום לימוד וכיתה.");
       return;
     }
 
-    const prompt = `אני מורה ל${subject} עבור ${grade}. ${
-      goal ? "מטרת השיעור שלי: " + goal + "." : ""
-    } אילו תוצרים דיגיטליים אתה ממליץ לי להשתמש בהם (כגון מצגת, סרטון, משחק)? פרט גם מטרת שיעור מוצעת וכלים מתאימים.`;
+    const prompt = `
+אני מורה ל${subject} עבור ${grade}.
+${goal ? "מטרת השיעור שלי היא: " + goal + "." : ""}
+אילו תוצרים דיגיטליים כדאי לי ליצור (מצגת, סרטון, משחק וכו')?
+פרט גם מטרת שיעור מוצעת וכלי מתאים לכל תוצר. החזר תשובה ברורה ומפורטת.
+    `;
 
-    const responseDiv = document.getElementById("output");
-    responseDiv.innerHTML = "⏳ מבקש המלצה מ־GPT...";
+    resultsDiv.innerHTML = "⏳ מבקש המלצה מהבינה המלאכותית...";
 
     try {
       const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: "Bearer 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"
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: prompt }],
-        }),
+          model: "gpt-4",
+          messages: [{ role: "user", content: prompt }]
+        })
       });
 
       const data = await res.json();
       if (data.choices && data.choices.length > 0) {
-        responseDiv.innerHTML = "🎯 המלצה:
-
-" + data.choices[0].message.content;
+        resultsDiv.innerHTML = "<h3>🎯 המלצה מותאמת:</h3><p>" + data.choices[0].message.content.replace(/\n/g, "<br>") + "</p>";
       } else {
-        responseDiv.innerHTML = "⚠️ לא התקבלה תשובה מהשרת.";
+        resultsDiv.innerHTML = "⚠️ לא התקבלה תשובה מהשרת.";
       }
     } catch (error) {
-      responseDiv.innerHTML = "❌ שגיאה: " + error.message;
+      resultsDiv.innerHTML = "❌ שגיאה: " + error.message;
     }
   }
 </script>
+
 </body>
 </html>
