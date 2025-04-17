@@ -166,5 +166,18 @@
 </script>
 
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const autofillBtn = document.getElementById("autofill");
+  if (autofillBtn) {
+    autofillBtn.addEventListener("click", function () {
+      document.getElementById("teacher").value = "מורה למדעי הטבע";
+      document.getElementById("classDescription").value = "כיתה ט' עם תלמידים סקרנים";
+      document.getElementById("language").value = "עברית";
+    });
+  }
+});
+</script>
 </body>
 </html>
