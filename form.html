@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <link rel="stylesheet" href="assets/style.css">
   <meta charset="UTF-8">
   <title>PromptEDU - שאלון מדורג</title>
   <style>
@@ -47,6 +46,7 @@
   <form id="teacherForm">
     <div class="step active">
       <h2>שלב 1: פרטים כלליים</h2>
+<button class="ai-suggest" onclick="autofillStep(1)">🤖 עזרה במילוי שלב 1</button>
       <label>אני מורה ל:</label><input type="text"><div class="example">✏️ דוגמה: ביולוגיה, מתמטיקה</div>
       <label>תיאור הכיתה:</label><textarea></textarea><div class="example">✏️ דוגמה: כיתה ז', תלמידים עם דיסלקציה</div>
       <label>שפה מועדפת:</label><input type="text"><div class="example">✏️ דוגמה: עברית</div>
@@ -83,12 +83,7 @@
       <button type="button" onclick="prevStep(2)">הקודם</button>
       <button type="submit">שלח שאלון</button>
     </div>
-  
-<div style="text-align: center; margin: 30px 0;">
-  <button onclick="suggestAI()" class="button">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
-</div>
-
-</form>
+  </form>
 </div>
 
 <script>
@@ -107,36 +102,26 @@
 </script>
 
 <script>
-  function suggestAI() {
-    const form = document.getElementById('teacherForm');
-    const subject = form.querySelector('input[type=text]');
-    const textareas = form.querySelectorAll('textarea');
-    const inputs = form.querySelectorAll('input[type=text]');
-    const selects = form.querySelectorAll('select');
-
-    let detected = subject.value.toLowerCase();
-
-    if (detected.includes("פילוסופיה")) {
-      inputs[1].value = "כיתה ז'";
-      inputs[2].value = "מבוא לערכים";
-      inputs[3].value = "דיון מוסרי בפילוסופיה יומיומית";
-      textareas[1].value = "להעלות דיון על ערכים דרך סיטואציות מחיי היומיום";
-      selects[0].value = "משחק";
-    } else if (detected.includes("מדעים") || detected.includes("פיזיקה")) {
-      inputs[1].value = "כיתה ח'";
-      inputs[2].value = "אנרגיה ותנועה";
-      inputs[3].value = "חוקי ניוטון";
-      textareas[1].value = "להסביר את עקרונות ניוטון דרך ניסוי והדגמה";
-      selects[0].value = "סרטון";
-    } else {
-      inputs[1].value = "כיתה ו'";
-      inputs[2].value = "היכרות עם מושג";
-      inputs[3].value = "שיעור מבוא";
-      textareas[1].value = "הצגת הנושא בצורה ויזואלית וחווייתית";
-      selects[0].value = "מצגת";
+  function autofillStep(step) {
+    switch(step) {
+      case 1:
+        document.getElementById('teacher').value = "מדעים";
+        document.getElementById('classDescription').value = "כיתה ז', תלמידים עם קושי בריכוז";
+        document.getElementById('language').value = "עברית";
+        break;
+      case 2:
+        document.getElementById('lessonTitle').value = "היכרות עם מושגי אנרגיה";
+        document.getElementById('lessonTopic').value = "אנרגיה ותנועה";
+        document.getElementById('lessonGoals').value = "לזהות מקורות אנרגיה שונים ולהבין חוק שימור אנרגיה";
+        break;
+      case 3:
+        document.getElementById('productType').value = "סרטון";
+        document.getElementById('productExplanation').value = "הסבר ויזואלי כולל דוגמאות והנפשות";
+        break;
+      case 4:
+        document.getElementById('additionalInfo').value = "התלמידים אוהבים קטעי וידאו קצרים. עדיף חומר אינטראקטיבי.";
+        break;
     }
-
-    alert("🎉 מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
   }
 </script>
 
