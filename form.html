@@ -1,38 +1,50 @@
 
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <title>שאלון סופר-מלא למורים</title>
-    <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <title>שאלון סופר-מלא למורים</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>📝 שאלון סופר-מלא למורים</h1>
-    <p class="info">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
-    <a href="index.html" class="home-link">🔙 חזרה לדף הבית</a>
+  <h1>📝 שאלון סופר-מלא למורים</h1>
+  <p class="info">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</p>
+  <a href="index.html" class="home-link">🔙 חזרה לדף הבית</a>
 
-    <div class="step-navigation">
-        <span class="step active-step">1</span>
-        <span class="step">2</span>
-        <span class="step">3</span>
-        <span class="step">4</span>
-    </div>
+  <div class="step-navigation">
+    <span class="step active-step">1</span>
+    <span class="step">2</span>
+    <span class="step">3</span>
+    <span class="step">4</span>
+  </div>
 
-    <h2>שלב 1: פרטים כלליים</h2>
+  <form id="form">
+    <label for="subject">אני מורה ל:</label>
+    <input type="text" id="subject" name="subject" placeholder="לדוגמה: ביולוגיה, מתמטיקה">
 
-    <form id="teacher-form">
-        <label>אני מורה ל:</label>
-        <input type="text" name="subject" placeholder="לדוגמה: ביולוגיה, מתמטיקה" />
+    <label for="class">תיאור הכיתה:</label>
+    <textarea id="class" name="class" placeholder="לדוגמה: כיתה ז׳, תלמידים עם דיסלקציה"></textarea>
 
-        <label>תיאור הכיתה:</label>
-        <textarea name="class_description" placeholder="לדוגמה: כיתה ז׳, תלמידים עם דיסלקציה"></textarea>
+    <label for="language">שפה מועדפת:</label>
+    <input type="text" id="language" name="language" placeholder="לדוגמה: עברית">
 
-        <label>שפה מועדפת:</label>
-        <input type="text" name="language" placeholder="לדוגמה: עברית" />
+    <button type="submit">הבא</button>
+  </form>
 
-        <button type="submit">הבא</button>
-    </form>
+  <button class="ai-suggest" onclick="suggestAI()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
 
-    <button type="button" class="ai-suggest">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
+  <script>
+    function suggestAI() {
+      const subjectField = document.getElementById('subject');
+      const classField = document.getElementById('class');
+      const languageField = document.getElementById('language');
+
+      if (!subjectField.value) subjectField.value = "מדעים";
+      if (!classField.value) classField.value = "כיתה ח׳ עם תלמידים סקרנים";
+      if (!languageField.value) languageField.value = "עברית";
+
+      alert("🎉 השדות מולאו עבורך בהצעות התחלתיות – תוכל לשנות אותן לפי הצורך.");
+    }
+  </script>
 </body>
 </html>
