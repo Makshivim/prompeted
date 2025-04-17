@@ -106,39 +106,51 @@
   function prevStep(n) { current = n; showStep(current); }
 </script>
 
+
 <script>
   function suggestAI() {
     const form = document.getElementById('teacherForm');
-    const subject = form.querySelector('input[type=text]');
+    const inputs = form.querySelectorAll('input[type="text"]');
     const textareas = form.querySelectorAll('textarea');
-    const inputs = form.querySelectorAll('input[type=text]');
     const selects = form.querySelectorAll('select');
 
-    let detected = subject.value.toLowerCase();
+    const subjectValue = inputs[0].value.toLowerCase();
 
-    if (detected.includes("פילוסופיה")) {
+    if (subjectValue.includes("פילוסופיה")) {
       inputs[1].value = "כיתה ז'";
-      inputs[2].value = "מבוא לערכים";
-      inputs[3].value = "דיון מוסרי בפילוסופיה יומיומית";
+      textareas[0].value = "כיתה הומוגנית, תלמידים עם קושי רגשי קל";
+      inputs[2].value = "עברית";
+
+      inputs[3].value = "מבוא לערכים";
+      inputs[4].value = "דיון מוסרי בפילוסופיה יומיומית";
       textareas[1].value = "להעלות דיון על ערכים דרך סיטואציות מחיי היומיום";
       selects[0].value = "משחק";
-    } else if (detected.includes("מדעים") || detected.includes("פיזיקה")) {
+
+    } else if (subjectValue.includes("פיזיקה") || subjectValue.includes("מדעים")) {
       inputs[1].value = "כיתה ח'";
-      inputs[2].value = "אנרגיה ותנועה";
-      inputs[3].value = "חוקי ניוטון";
-      textareas[1].value = "להסביר את עקרונות ניוטון דרך ניסוי והדגמה";
+      textareas[0].value = "כיתה הטרוגנית, תלמידים עם ADHD";
+      inputs[2].value = "עברית";
+
+      inputs[3].value = "אנרגיה ותנועה";
+      inputs[4].value = "חוקי ניוטון";
+      textareas[1].value = "הסבר חזותי של חוקי ניוטון עם דוגמה מסרטונים";
       selects[0].value = "סרטון";
+
     } else {
       inputs[1].value = "כיתה ו'";
-      inputs[2].value = "היכרות עם מושג";
-      inputs[3].value = "שיעור מבוא";
+      textareas[0].value = "כיתה קטנה, תלמידים עם דיסגרפיה";
+      inputs[2].value = "עברית";
+
+      inputs[3].value = "היכרות עם מושג";
+      inputs[4].value = "שיעור מבוא";
       textareas[1].value = "הצגת הנושא בצורה ויזואלית וחווייתית";
       selects[0].value = "מצגת";
     }
 
-    alert("🎉 מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
+    alert("🎉 מילאנו עבורך את כל השלבים בהצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
   }
 </script>
+
 
 </body>
 </html>
