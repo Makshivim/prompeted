@@ -34,20 +34,6 @@
   </style>
 </head>
 <body>
-
-<a href="index.html" style="
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-">חזרה לדף הבית</a>
-
 <div class="container">
   <h1>📝 שאלון סופר-מלא למורים</h1>
   <div class="note">ככל שתמלא/י יותר פרטים – כך התוצר יהיה מותאם ומדויק יותר לצרכים שלך.</div>
@@ -120,64 +106,39 @@
   function prevStep(n) { current = n; showStep(current); }
 </script>
 
-
 <script>
   function suggestAI() {
     const form = document.getElementById('teacherForm');
-    const inputs = form.querySelectorAll('input[type="text"]');
+    const subject = form.querySelector('input[type=text]');
     const textareas = form.querySelectorAll('textarea');
+    const inputs = form.querySelectorAll('input[type=text]');
     const selects = form.querySelectorAll('select');
 
-    const subjectValue = inputs[0].value.toLowerCase();
+    let detected = subject.value.toLowerCase();
 
-    if (subjectValue.includes("פילוסופיה")) {
+    if (detected.includes("פילוסופיה")) {
       inputs[1].value = "כיתה ז'";
-      textareas[0].value = "כיתה הומוגנית, תלמידים עם קושי רגשי קל";
-      inputs[2].value = "עברית";
-
-      inputs[3].value = "מבוא לערכים";
-      inputs[4].value = "דיון מוסרי בפילוסופיה יומיומית";
+      inputs[2].value = "מבוא לערכים";
+      inputs[3].value = "דיון מוסרי בפילוסופיה יומיומית";
       textareas[1].value = "להעלות דיון על ערכים דרך סיטואציות מחיי היומיום";
       selects[0].value = "משחק";
-
-    } else if (subjectValue.includes("פיזיקה") || subjectValue.includes("מדעים")) {
+    } else if (detected.includes("מדעים") || detected.includes("פיזיקה")) {
       inputs[1].value = "כיתה ח'";
-      textareas[0].value = "כיתה הטרוגנית, תלמידים עם ADHD";
-      inputs[2].value = "עברית";
-
-      inputs[3].value = "אנרגיה ותנועה";
-      inputs[4].value = "חוקי ניוטון";
-      textareas[1].value = "הסבר חזותי של חוקי ניוטון עם דוגמה מסרטונים";
+      inputs[2].value = "אנרגיה ותנועה";
+      inputs[3].value = "חוקי ניוטון";
+      textareas[1].value = "להסביר את עקרונות ניוטון דרך ניסוי והדגמה";
       selects[0].value = "סרטון";
-
     } else {
       inputs[1].value = "כיתה ו'";
-      textareas[0].value = "כיתה קטנה, תלמידים עם דיסגרפיה";
-      inputs[2].value = "עברית";
-
-      inputs[3].value = "היכרות עם מושג";
-      inputs[4].value = "שיעור מבוא";
+      inputs[2].value = "היכרות עם מושג";
+      inputs[3].value = "שיעור מבוא";
       textareas[1].value = "הצגת הנושא בצורה ויזואלית וחווייתית";
       selects[0].value = "מצגת";
     }
 
-    alert("🎉 מילאנו עבורך את כל השלבים בהצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
+    alert("🎉 מילאנו עבורך הצעות התחלתיות – תוכל לשנות אותן לפי הצורך");
   }
 </script>
 
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const autofillBtn = document.getElementById("autofill");
-  if (autofillBtn) {
-    autofillBtn.addEventListener("click", function () {
-      document.getElementById("teacher").value = "מורה למדעי הטבע";
-      document.getElementById("classDescription").value = "כיתה ט' עם תלמידים סקרנים";
-      document.getElementById("language").value = "עברית";
-    });
-  }
-});
-</script>
 </body>
 </html>
