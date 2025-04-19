@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+6<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -308,22 +308,28 @@ function validateForm() {
 }
 </script>
 
+  ...
+</script>
 
+<script>
   function validateForm() {
-  let valid = true;
-  const requiredFields = ['teacher', 'lessonTopic', 'productType'];
-  requiredFields.forEach(id => {
-    const field = document.getElementById(id);
-    if (!field.value.trim()) {
-      field.style.borderColor = 'red';
-      valid = false;
-    } else {
-      field.style.borderColor = '#ccc';
-    }
-  });
-  if (!valid) alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
-  return valid;
-}
+    let valid = true;
+    const requiredFields = ['teacher', 'lessonTopic', 'productType'];
+    requiredFields.forEach(id => {
+      const field = document.getElementById(id);
+      if (!field.value.trim()) {
+        field.style.borderColor = 'red';
+        valid = false;
+      } else {
+        field.style.borderColor = '#ccc';
+      }
+    });
+    if (!valid)
+      alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
+    return valid;
+  }
+</script>
 
 </body>
 </html>
+/
