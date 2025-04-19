@@ -57,7 +57,9 @@
   <script src="tools_data.js"></script>
 </head>
 <body>
-  <h1>📚 הפרומפט שלך מוכן!</h1>
+ <h1>📚 הפרומפט שלך מוכן!</h1>
+<div id="tool-recommendation" style="margin-top:20px; font-weight:bold; text-align: center;"></div>
+
 
   <div class="prompt-box" id="prompt-container" style="display:none;">
     <h2 id="tool-title">🔧</h2>
@@ -79,20 +81,26 @@
     }
 
     function showToolPrompt() {
-      const outputType = getOutputType();
-      const tool = tools.find(t => t.outputs.includes(outputType));
+  const outputType = getOutputType();
+  const tool = tools.find(t => t.outputs.includes(outputType));
 
-      if (!tool) {
-        alert("לא נמצא כלי מתאים לסוג התוצר שנבחר.");
-        return;
-      }
+  if (!tool) {
+    alert("לא נמצא כלי מתאים לסוג התוצר שנבחר.");
+    return;
+  }
 
-      document.getElementById("tool-title").innerText = `🔧 תוצר מסוג "${outputType}" באמצעות ${tool.name}`;
-      document.getElementById("prompt-text").innerText = generatePrompt(outputType);
-      document.getElementById("tool-link").href = tool.link;
-      document.getElementById("tool-link").innerText = `🚀 פתח את ${tool.name}`;
-      document.getElementById("prompt-container").style.display = "block";
-    }
+  // ✅ תוספת הסבר למשתמש
+  document.getElementById("tool-recommendation").innerHTML = `
+    🔍 המערכת התאימה אוטומטית את הכלי <strong>${tool.name}</strong> עבור תוצר מסוג "<strong>${outputType}</strong>"
+  `;
+
+  document.getElementById("tool-title").innerText = `🔧 תוצר מסוג "${outputType}" באמצעות ${tool.name}`;
+  document.getElementById("prompt-text").innerText = generatePrompt(outputType);
+  document.getElementById("tool-link").href = tool.link;
+  document.getElementById("tool-link").innerText = `🚀 פתח את ${tool.name}`;
+  document.getElementById("prompt-container").style.display = "block";
+}
+
 
     function copyPrompt() {
       const text = document.getElementById("prompt-text").innerText;
