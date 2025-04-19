@@ -60,7 +60,7 @@
     .step { display: none; }
     .step.active { display: block; }
     label { font-weight: bold; display: block; margin-top: 20px; }
-    input[type="text"], textarea, select {
+    input[type="text"], textarea {
       width: 100%; padding: 10px; margin-top: 5px;
       border-radius: 5px; border: 1px solid #ccc;
     }
@@ -79,6 +79,15 @@
       font-weight: bold; border: none;
       border-radius: 8px; margin: 30px auto 10px auto;
       display: block; cursor: pointer;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
     }
     @media (max-width: 600px) {
       .nav-buttons { flex-direction: column; gap: 10px; }
@@ -123,9 +132,9 @@
     <!-- שלב 3 -->
     <div class="step">
       <h2>שלב 3: תוצרים וחומרים</h2>
-      <label for="productType">סוג תוצר:</label>
-      <select id="productType" multiple></select>
-      <div class="example">בחר אחד או יותר מסוגי התוצרים הרצויים</div>
+      <label>סוג תוצר:</label>
+      <div id="productTypeGroup" class="checkbox-group"></div>
+      <input type="hidden" id="productType">
       <label>הסבר נוסף:</label>
       <textarea id="productExplanation"></textarea>
       <div class="example">לדוגמה: כולל תמונות ודוגמאות</div>
@@ -137,7 +146,6 @@
       <label>הערות נוספות:</label>
       <textarea id="extraNotes"></textarea>
       <label>שפת התוצר:</label><input type="text" id="outputLanguage"><div class="example">לדוגמה: אנגלית (אם שונה משפת ההוראה)</div>
-
       <label>איך תרצה שהתלמידים יסכמו את השיעור?</label>
       <div class="checkbox-group">
         <label><input type="checkbox"> סיכום כתוב</label>
@@ -145,7 +153,6 @@
         <label><input type="checkbox"> דיון כיתתי מסכם</label>
         <label><input type="checkbox"> מפת מושגים</label>
       </div>
-
       <label>איך תעריך את הבנת התלמידים?</label>
       <div class="checkbox-group">
         <label><input type="checkbox"> בוחן קצר</label>
@@ -153,7 +160,6 @@
         <label><input type="checkbox"> פעילות משחקית</label>
         <label><input type="checkbox"> הערכה על בסיס שיחה</label>
       </div>
-
       <label>כמה דוגמאות תרצה לקבל?</label>
       <input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
     </div>
@@ -181,8 +187,8 @@
         currentStep++;
         showStep(currentStep);
       } else {
-        const selectedOptions = Array.from(document.getElementById("productType").selectedOptions).map(opt => opt.value.trim());
-        localStorage.setItem("outputTypes", JSON.stringify(selectedOptions));
+        const selected = Array.from(document.querySelectorAll('#productTypeGroup input:checked')).map(cb => cb.value);
+        localStorage.setItem("outputTypes", JSON.stringify(selected));
         alert("השאלון הסתיים! ניתן כעת ליצור את התוצר או לשמור את הנתונים.");
         window.location.href = "generator.html";
       }
@@ -196,14 +202,17 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const productTypeSelect = document.getElementById('productType');
+      const productTypeGroup = document.getElementById('productTypeGroup');
       const outputs = new Set();
       tools.forEach(tool => tool.outputs.forEach(o => outputs.add(o)));
       Array.from(outputs).sort().forEach(output => {
-        const option = document.createElement('option');
-        option.value = output;
-        option.textContent = output;
-        productTypeSelect.appendChild(option);
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = output;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(' ' + output));
+        productTypeGroup.appendChild(label);
       });
     });
   </script>
