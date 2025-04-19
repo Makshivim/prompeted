@@ -60,7 +60,7 @@
     .step { display: none; }
     .step.active { display: block; }
     label { font-weight: bold; display: block; margin-top: 20px; }
-    input[type="text"], textarea {
+    input[type="text"], textarea, select, .multiselect {
       width: 100%; padding: 10px; margin-top: 5px;
       border-radius: 5px; border: 1px solid #ccc;
     }
@@ -80,14 +80,9 @@
       border-radius: 8px; margin: 30px auto 10px auto;
       display: block; cursor: pointer;
     }
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    .checkbox-group label {
-      font-weight: normal;
+    select[multiple] {
+      height: auto;
+      min-height: 120px;
     }
     @media (max-width: 600px) {
       .nav-buttons { flex-direction: column; gap: 10px; }
@@ -132,9 +127,9 @@
     <!-- שלב 3 -->
     <div class="step">
       <h2>שלב 3: תוצרים וחומרים</h2>
-      <label>סוג תוצר:</label>
-      <div id="productTypeGroup" class="checkbox-group"></div>
-      <input type="hidden" id="productType">
+      <label for="productType">סוג תוצר:</label>
+      <select id="productType" multiple size="8"></select>
+      <div class="example">בחר אחד או יותר מסוגי התוצרים הרצויים</div>
       <label>הסבר נוסף:</label>
       <textarea id="productExplanation"></textarea>
       <div class="example">לדוגמה: כולל תמונות ודוגמאות</div>
@@ -143,9 +138,21 @@
     <!-- שלב 4 -->
     <div class="step">
       <h2>שלב 4: התאמות ודגשים</h2>
+      <label>בחר התאמות לתלמידים:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox"> פישוט שפה</label>
+        <label><input type="checkbox"> חלוקה למקטעים</label>
+        <label><input type="checkbox"> תמיכה חזותית</label>
+        <label><input type="checkbox"> תיווך שמיעתי</label>
+        <label><input type="checkbox"> זמן מוארך</label>
+        <label><input type="checkbox"> התאמה לדיסלקציה</label>
+        <label><input type="checkbox"> התאמה ל-ADHD</label>
+      </div>
+
       <label>הערות נוספות:</label>
       <textarea id="extraNotes"></textarea>
       <label>שפת התוצר:</label><input type="text" id="outputLanguage"><div class="example">לדוגמה: אנגלית (אם שונה משפת ההוראה)</div>
+
       <label>איך תרצה שהתלמידים יסכמו את השיעור?</label>
       <div class="checkbox-group">
         <label><input type="checkbox"> סיכום כתוב</label>
@@ -153,6 +160,7 @@
         <label><input type="checkbox"> דיון כיתתי מסכם</label>
         <label><input type="checkbox"> מפת מושגים</label>
       </div>
+
       <label>איך תעריך את הבנת התלמידים?</label>
       <div class="checkbox-group">
         <label><input type="checkbox"> בוחן קצר</label>
@@ -160,6 +168,7 @@
         <label><input type="checkbox"> פעילות משחקית</label>
         <label><input type="checkbox"> הערכה על בסיס שיחה</label>
       </div>
+
       <label>כמה דוגמאות תרצה לקבל?</label>
       <input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
     </div>
@@ -168,6 +177,8 @@
       <button onclick="prevStep()">הקודם</button>
       <button onclick="nextStep()">הבא</button>
     </div>
+
+    <button class="ai-button" onclick="fillExample()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
   </div>
 
   <script>
@@ -187,8 +198,8 @@
         currentStep++;
         showStep(currentStep);
       } else {
-        const selected = Array.from(document.querySelectorAll('#productTypeGroup input:checked')).map(cb => cb.value);
-        localStorage.setItem("outputTypes", JSON.stringify(selected));
+        const selectedOptions = Array.from(document.getElementById("productType").selectedOptions).map(opt => opt.value.trim());
+        localStorage.setItem("outputTypes", JSON.stringify(selectedOptions));
         alert("השאלון הסתיים! ניתן כעת ליצור את התוצר או לשמור את הנתונים.");
         window.location.href = "generator.html";
       }
@@ -202,19 +213,37 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const productTypeGroup = document.getElementById('productTypeGroup');
+      const productTypeSelect = document.getElementById('productType');
       const outputs = new Set();
       tools.forEach(tool => tool.outputs.forEach(o => outputs.add(o)));
       Array.from(outputs).sort().forEach(output => {
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.value = output;
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(' ' + output));
-        productTypeGroup.appendChild(label);
+        const option = document.createElement('option');
+        option.value = output;
+        option.textContent = output;
+        productTypeSelect.appendChild(option);
       });
     });
+
+    function fillExample() {
+      if (currentStep === 0) {
+        document.getElementById('teacher').value = 'מדעים';
+        document.getElementById('classDesc').value = "כיתה ז', תלמידים עם קשיי ריכוז";
+        document.getElementById('language').value = "עברית";
+      } else if (currentStep === 1) {
+        document.getElementById('lessonTopic').value = "מערכת העיכול";
+        document.getElementById('lessonGoal').value = "להבין את תפקידי איברי מערכת העיכול";
+      } else if (currentStep === 2) {
+        const productType = document.getElementById("productType");
+        Array.from(productType.options).forEach(opt => {
+          opt.selected = opt.value === "מצגת" || opt.value === "סרטון";
+        });
+        document.getElementById('productExplanation').value = "כולל אנימציה ודוגמאות";
+      } else if (currentStep === 3) {
+        document.getElementById('extraNotes').value = "עדיף לשלב שאלות סיכום חזותיות";
+        document.getElementById('outputLanguage').value = "עברית";
+        document.getElementById('exampleCount').value = "2";
+      }
+    }
   </script>
 </body>
 </html>
