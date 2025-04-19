@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
   <title>PromptEDU - שאלון רב-שלבי</title>
   <script src="tools_data.js"></script>
   <style>
@@ -98,29 +98,31 @@
 
     <!-- שלב 1 -->
     <div class="step active">
-      <label>אני מורה ל:</label>
-      <input type="text" id="teacher">
-      <div class="example">לדוגמה: מתמטיקה</div>
-      <label>תיאור הכיתה:</label>
-      <textarea id="classDesc"></textarea>
-      <div class="example">לדוגמה: כיתה ז', תלמידים עם קשיי ריכוז</div>
-      <label>שפה מועדפת:</label>
-      <input type="text" id="language">
-      <div class="example">לדוגמה: עברית</div>
+      <h2>שלב 1: פרטים כלליים</h2>
+      <label>אני מורה ל:</label><input type="text" id="teacher"><div class="example">לדוגמה: מתמטיקה</div>
+      <label>תיאור הכיתה:</label><textarea id="classDesc"></textarea><div class="example">לדוגמה: כיתה ז', תלמידים עם קשיי ריכוז</div>
+      <label>שפה מועדפת:</label><input type="text" id="language"><div class="example">לדוגמה: עברית</div>
     </div>
 
     <!-- שלב 2 -->
     <div class="step">
-      <label>נושא השיעור:</label>
-      <input type="text" id="lessonTopic">
-      <div class="example">לדוגמה: מערכת העיכול</div>
-      <label>מטרת השיעור:</label>
-      <textarea id="lessonGoal"></textarea>
-      <div class="example">לדוגמה: להבין את תפקידי איברי המערכת</div>
+      <h2>שלב 2: נושא ומבנה השיעור</h2>
+      <label>נושא השיעור:</label><input type="text" id="lessonTopic"><div class="example">לדוגמה: מערכת העיכול</div>
+      <label>מטרת השיעור:</label><textarea id="lessonGoal"></textarea><div class="example">לדוגמה: להבין את תפקידי איברי המערכת</div>
+      <label>בחר סוגי שיעור:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox"> שיעור פרונטלי</label>
+        <label><input type="checkbox"> שיעור סוקרטי</label>
+        <label><input type="checkbox"> עבודה בקבוצות</label>
+        <label><input type="checkbox"> כיתה הפוכה</label>
+        <label><input type="checkbox"> למידה מבוססת פרויקט</label>
+        <label><input type="checkbox"> למידת עמיתים</label>
+      </div>
     </div>
 
     <!-- שלב 3 -->
     <div class="step">
+      <h2>שלב 3: תוצרים וחומרים</h2>
       <label for="productType">סוג תוצר:</label>
       <select id="productType" multiple></select>
       <div class="example">בחר אחד או יותר מסוגי התוצרים הרצויים</div>
@@ -131,11 +133,29 @@
 
     <!-- שלב 4 -->
     <div class="step">
+      <h2>שלב 4: התאמות ודגשים</h2>
       <label>הערות נוספות:</label>
       <textarea id="extraNotes"></textarea>
+      <label>שפת התוצר:</label><input type="text" id="outputLanguage"><div class="example">לדוגמה: אנגלית (אם שונה משפת ההוראה)</div>
+
+      <label>איך תרצה שהתלמידים יסכמו את השיעור?</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox"> סיכום כתוב</label>
+        <label><input type="checkbox"> סיכום בציור או קומיקס</label>
+        <label><input type="checkbox"> דיון כיתתי מסכם</label>
+        <label><input type="checkbox"> מפת מושגים</label>
+      </div>
+
+      <label>איך תעריך את הבנת התלמידים?</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox"> בוחן קצר</label>
+        <label><input type="checkbox"> מטלת ביצוע</label>
+        <label><input type="checkbox"> פעילות משחקית</label>
+        <label><input type="checkbox"> הערכה על בסיס שיחה</label>
+      </div>
+
       <label>כמה דוגמאות תרצה לקבל?</label>
-      <input type="text" id="exampleCount">
-      <div class="example">לדוגמה: 2</div>
+      <input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
     </div>
 
     <div class="nav-buttons">
