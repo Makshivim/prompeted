@@ -221,6 +221,9 @@
 <input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
 </div>
 
+    <label>צרף קובץ עזר (אופציונלי):</label>
+<input type="file" id="attachment" accept=".pdf,.doc,.docx,.jpg,.png">
+
 <!-- ניווט וכפתור AI -->
     <div class="nav-buttons">
       <button onclick="prevStep()">הקודם</button>
@@ -228,6 +231,8 @@
     </div>
     <button class="ai-button" onclick="fillExample()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
   </div>
+
+  <button onclick="exportToPDF()" class="ai-button">📄 שמור את הטופס כ־PDF</button>
 
   <script>
     const steps = document.querySelectorAll('.step');
@@ -273,5 +278,52 @@
       }
     }
   </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function exportToPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let content = '';
+  document.querySelectorAll('input[type=text], textarea').forEach(el => {
+    if (el.value.trim()) content += el.previousElementSibling.innerText + ': ' + el.value + '\n';
+  });
+  doc.text(content, 10, 10);
+  doc.save('promptedu_form.pdf');
+}
+
+function validateForm() {
+  let valid = true;
+  const requiredFields = ['teacher', 'lessonTopic', 'productType'];
+  requiredFields.forEach(id => {
+    const field = document.getElementById(id);
+    if (!field.value.trim()) {
+      field.style.borderColor = 'red';
+      valid = false;
+    } else {
+      field.style.borderColor = '#ccc';
+    }
+  });
+  if (!valid) alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
+  return valid;
+}
+</script>
+
+
+  function validateForm() {
+  let valid = true;
+  const requiredFields = ['teacher', 'lessonTopic', 'productType'];
+  requiredFields.forEach(id => {
+    const field = document.getElementById(id);
+    if (!field.value.trim()) {
+      field.style.borderColor = 'red';
+      valid = false;
+    } else {
+      field.style.borderColor = '#ccc';
+    }
+  });
+  if (!valid) alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
+  return valid;
+}
+
 </body>
 </html>
