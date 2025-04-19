@@ -1,4 +1,4 @@
-6<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -149,6 +149,9 @@
     <div class="step active">
       <h2>שלב 1: פרטים כלליים</h2>
       <label>אני מורה ל:</label><input type="text" id="teacher"><div class="example">לדוגמה: מתמטיקה</div>
+     
+<small id="error-teacher" style="color:red; display:none;">שדה חובה</small>
+
       <label>תיאור הכיתה:</label><textarea id="classDesc"></textarea><div class="example">לדוגמה: כיתה ז', תלמידים עם קשיי ריכוז</div>
       <label>שפה מועדפת:</label><input type="text" id="language"><div class="example">לדוגמה: עברית</div>
     </div>
@@ -227,7 +230,8 @@
 <!-- ניווט וכפתור AI -->
     <div class="nav-buttons">
       <button onclick="prevStep()">הקודם</button>
-      <button onclick="nextStep()">הבא</button>
+     <button onclick="if(validateForm()) nextStep()">הבא</button>
+
     </div>
     <button class="ai-button" onclick="fillExample()">🤖 אני לא בטוח – עזרו לי לבחור תוצרים</button>
   </div>
@@ -277,59 +281,62 @@
         document.getElementById('extraNotes').value = "עדיף לכלול שאלות בסיום וסיכום חזותי";
       }
     }
-  </script>
+</script>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-function exportToPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-  let content = '';
-  document.querySelectorAll('input[type=text], textarea').forEach(el => {
-    if (el.value.trim()) content += el.previousElementSibling.innerText + ': ' + el.value + '\n';
-  });
-  doc.text(content, 10, 10);
-  doc.save('promptedu_form.pdf');
-}
+  function exportToPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let content = '';
+    document.querySelectorAll('input[type=text], textarea').forEach(el => {
+      if (el.value.trim()) content += el.previousElementSibling.innerText + ': ' + el.value + '\n';
+    });
+    doc.text(content, 10, 10);
+    doc.save('promptedu_form.pdf');
+  }
 
-function validateForm() {
+ function validateForm() {
   let valid = true;
-  const requiredFields = ['teacher', 'lessonTopic', 'productType'];
-  requiredFields.forEach(id => {
-    const field = document.getElementById(id);
-    if (!field.value.trim()) {
-      field.style.borderColor = 'red';
-      valid = false;
-    } else {
-      field.style.borderColor = '#ccc';
-    }
+  let requiredFields = [];
+
+  if (currentStep === 0) {
+    requiredFields = ['teacher', 'classDesc', 'language'];
+  } else if (currentStep === 1) {
+    requiredFields = ['lessonTopic', 'lessonGoal'];
+  } else if (currentStep === 2) {
+    requiredFields = ['productType', 'productExplanation'];
+  } else if (currentStep === 3) {
+    requiredFields = ['exampleCount'];
+  }
+
+    requiredFields.forEach(id => {
+   const field = document.getElementById(id);
+const errorMsg = document.getElementById('error-' + id);
+
+if (!field || !field.value.trim()) {
+  field.style.borderColor = 'red';
+  if (errorMsg) errorMsg.style.display = 'inline';
+  valid = false;
+} else {
+  field.style.borderColor = '#ccc';
+  if (errorMsg) errorMsg.style.display = 'none';
+}
   });
+
   if (!valid) alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
   return valid;
 }
-</script>
 
-  ...
-</script>
+  document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+  el.addEventListener('input', () => {
+    const errorMsg = document.getElementById('error-' + el.id);
+    el.style.borderColor = '#ccc';
+    if (errorMsg) errorMsg.style.display = 'none';
+  });
+});
 
-<script>
-  function validateForm() {
-    let valid = true;
-    const requiredFields = ['teacher', 'lessonTopic', 'productType'];
-    requiredFields.forEach(id => {
-      const field = document.getElementById(id);
-      if (!field.value.trim()) {
-        field.style.borderColor = 'red';
-        valid = false;
-      } else {
-        field.style.borderColor = '#ccc';
-      }
-    });
-    if (!valid)
-      alert('אנא מלא/י את כל השדות החיוניים המסומנים באדום');
-    return valid;
-  }
 </script>
 
 </body>
 </html>
-/
