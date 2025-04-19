@@ -152,7 +152,7 @@
     <div class="step">
       <h2>שלב 3: תוצרים וחומרים</h2>
       <label for="productType">סוג תוצר:</label>
-      <select id="productType">
+     <select id="productType" multiple>
         <option value="">בחר סוג תוצר...</option>
       </select>
       <div class="example">לדוגמה: מצגת / סרטון</div>
@@ -179,5 +179,40 @@
       });
     </script>
   </div>
+  <script>
+  const steps = document.querySelectorAll('.step');
+  const indicators = document.querySelectorAll('.progressbar li');
+  let currentStep = 0;
+
+  function showStep(index) {
+    steps.forEach((step, i) => {
+      step.classList.toggle('active', i === index);
+      indicators[i].classList.toggle('active', i <= index);
+    });
+  }
+
+  function nextStep() {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    } else {
+      // 🔥 שמירת כל סוגי התוצרים שנבחרו
+      const selectedOptions = Array.from(document.getElementById("productType").selectedOptions)
+                                   .map(opt => opt.value.trim());
+      localStorage.setItem("outputTypes", JSON.stringify(selectedOptions));
+
+      alert("השאלון הסתיים! ניתן כעת ליצור את התוצר או לשמור את הנתונים.");
+      window.location.href = "generator.html"; // הפניה לגנרטור
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+</script>
+
 </body>
 </html>
