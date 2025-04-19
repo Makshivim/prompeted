@@ -251,13 +251,20 @@
     }
 
     function nextStep() {
-      if (currentStep < steps.length - 1) {
-        currentStep++;
-        showStep(currentStep);
-      } else {
-        alert("השאלון הסתיים! ניתן כעת ליצור את התוצר או לשמור את הנתונים.");
-      }
-    }
+  if (currentStep < steps.length - 1) {
+    currentStep++;
+    showStep(currentStep);
+  } else {
+    // ✨ שומר את בחירת סוג התוצר לשימוש ב-generator.html
+    localStorage.setItem("outputType", document.getElementById("productType").value.trim());
+
+    alert("השאלון הסתיים! ניתן כעת ליצור את התוצר או לשמור את הנתונים.");
+    
+    // אופציונלי – הפניה אוטומטית לדף הבא:
+    // window.location.href = "generator.html";
+  }
+}
+
 
     function prevStep() {
       if (currentStep > 0) {
