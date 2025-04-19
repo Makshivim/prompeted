@@ -57,23 +57,17 @@
   <script src="tools_data.js"></script>
 </head>
 <body>
- <h1>📚 הפרומפט שלך מוכן!</h1>
-<div id="tool-recommendation" style="margin-top:20px; font-weight:bold; text-align: center;"></div>
-
-
-  <div class="prompt-box" id="prompt-container" style="display:none;">
-    <h2 id="tool-title">🔧</h2>
-    <div class="prompt-text" id="prompt-text"></div>
-    <div class="prompt-actions">
-      <button onclick="copyPrompt()">📋 העתק פרומפט</button>
-      <a id="tool-link" href="#" target="_blank">🚀 פתח את הכלי</a>
-    </div>
-  </div>
+  <h1>📚 הפרומפט שלך מוכן!</h1>
 
   <script>
-    function getOutputType() {
-      // אפשר גם מ-query string: new URLSearchParams(window.location.search).get("outputType");
-      return localStorage.getItem("outputType") || "מצגת";
+    function getOutputTypes() {
+      return JSON.parse(localStorage.getItem("outputTypes") || "[]");
+    }
+
+    function findMatchingTools(outputTypes) {
+      return tools.filter(tool =>
+        tool.outputs.some(output => outputTypes.includes(output))
+      );
     }
 
     function generatePrompt(outputType) {
@@ -81,29 +75,34 @@
     }
 
     function showToolPrompt() {
-  const outputType = getOutputType();
-  const tool = tools.find(t => t.outputs.includes(outputType));
+      const outputTypes = getOutputTypes();
+      const matchingTools = findMatchingTools(outputTypes);
 
-  if (!tool) {
-    alert("לא נמצא כלי מתאים לסוג התוצר שנבחר.");
-    return;
-  }
+      if (matchingTools.length === 0) {
+        alert("לא נמצאו כלים מתאימים לחומרי העזר שנבחרו.");
+        return;
+      }
 
-  // ✅ תוספת הסבר למשתמש
-  document.getElementById("tool-recommendation").innerHTML = `
-    🔍 המערכת התאימה אוטומטית את הכלי <strong>${tool.name}</strong> עבור תוצר מסוג "<strong>${outputType}</strong>"
-  `;
+      matchingTools.forEach(tool => {
+        const output = tool.outputs.find(o => outputTypes.includes(o));
+        const prompt = generatePrompt(output);
 
-  document.getElementById("tool-title").innerText = `🔧 תוצר מסוג "${outputType}" באמצעות ${tool.name}`;
-  document.getElementById("prompt-text").innerText = generatePrompt(outputType);
-  document.getElementById("tool-link").href = tool.link;
-  document.getElementById("tool-link").innerText = `🚀 פתח את ${tool.name}`;
-  document.getElementById("prompt-container").style.display = "block";
-}
+        const container = document.createElement("div");
+        container.className = "prompt-box";
+        container.innerHTML = `
+          <h2>🔧 תוצר מסוג "${output}" באמצעות ${tool.name}</h2>
+          <div class="prompt-text">${prompt}</div>
+          <div class="prompt-actions">
+            <button onclick="copyText(this)">📋 העתק פרומפט</button>
+            <a href="${tool.link}" target="_blank">🚀 פתח את ${tool.name}</a>
+          </div>
+        `;
+        document.body.appendChild(container);
+      });
+    }
 
-
-    function copyPrompt() {
-      const text = document.getElementById("prompt-text").innerText;
+    function copyText(btn) {
+      const text = btn.parentElement.previousElementSibling.innerText;
       navigator.clipboard.writeText(text).then(() => {
         alert("הפרומפט הועתק ✔");
       });
