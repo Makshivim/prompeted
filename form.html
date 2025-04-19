@@ -5,30 +5,133 @@
   <meta charset="UTF-8">
   <title>PromptEDU - שאלון רב-שלבי</title>
   <style>
-    body { font-family: Arial, sans-serif; direction: rtl; background-color: #f4f4f4; margin: 0; padding: 30px; }
-    .container { max-width: 850px; margin: auto; background-color: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
-    h1, h2 { text-align: center; }
-    .progressbar { display: flex; justify-content: space-between; counter-reset: step; margin: 20px 0 40px; padding: 0; }
-    .progressbar li { list-style: none; position: relative; text-align: center; flex: 1; color: gray; }
-    .progressbar li::before { content: counter(step); counter-increment: step; width: 30px; height: 30px; line-height: 30px; border: 2px solid gray; border-radius: 50%; display: block; margin: 0 auto 10px; }
-    .progressbar li.active { color: #4CAF50; font-weight: bold; }
-    .progressbar li.active::before { border-color: #4CAF50; background: #4CAF50; color: white; }
-    .step { display: none; }
-    .step.active { display: block; }
-    label { font-weight: bold; display: block; margin-top: 20px; }
-    input[type="text"], textarea { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
-    .example { font-size: 0.9em; color: #888; margin-bottom: 15px; }
-    .nav-buttons { margin-top: 20px; display: flex; justify-content: space-between; }
-    .nav-buttons button { padding: 10px 25px; background-color: #4CAF50; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
-    .nav-buttons button:hover { background-color: #388e3c; }
-    .ai-button { background-color: #72a76f; color: white; padding: 10px 18px; font-size: 15px; font-weight: bold; border: none; border-radius: 8px; margin: 30px auto 10px auto; display: block; cursor: pointer; }
-    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-    .checkbox-group label { font-weight: normal; }
-    @media (max-width: 600px) {
-      .nav-buttons { flex-direction: column; gap: 10px; }
-      .nav-buttons button { width: 100%; }
-      .container { padding: 15px; }
-      input[type="text"], textarea { font-size: 16px; }
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 30px;
+    }
+    .container {
+      max-width: 850px;
+      margin: auto;
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .progressbar {
+      display: flex;
+      justify-content: space-between;
+      counter-reset: step;
+      margin: 20px 0 40px;
+      padding: 0;
+    }
+    .progressbar li {
+      list-style: none;
+      position: relative;
+      text-align: center;
+      flex: 1;
+      color: gray;
+    }
+    .progressbar li::before {
+      content: counter(step);
+      counter-increment: step;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border: 2px solid gray;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .progressbar li.active {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    .progressbar li.active::before {
+      border-color: #4CAF50;
+      background: #4CAF50;
+      color: white;
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 20px;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .example {
+      font-size: 0.9em;
+      color: #888;
+      margin-bottom: 15px;
+    }
+    .nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .nav-buttons button {
+      padding: 10px 25px;
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .nav-buttons button:hover {
+      background-color: #388e3c;
+    }
+    .ai-button {
+      background-color: #72a76f;
+      color: white;
+      padding: 10px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      margin: 30px auto 10px auto;
+      display: block;
+      cursor: pointer;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+    }
+      @media (max-width: 600px) {
+      .nav-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .nav-buttons button {
+        width: 100%;
+      }
+      .container {
+        padding: 15px;
+      }
+      input[type="text"], textarea {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -42,6 +145,7 @@
       <li>4</li>
     </ul>
 
+    <!-- שלב 1 -->
     <div class="step active">
       <h2>שלב 1: פרטים כלליים</h2>
       <label>אני מורה ל:</label><input type="text" id="teacher"><div class="example">לדוגמה: מתמטיקה</div>
@@ -49,6 +153,7 @@
       <label>שפה מועדפת:</label><input type="text" id="language"><div class="example">לדוגמה: עברית</div>
     </div>
 
+    <!-- שלב 2 -->
     <div class="step">
       <h2>שלב 2: נושא ומבנה השיעור</h2>
       <label>נושא השיעור:</label><input type="text" id="lessonTopic"><div class="example">לדוגמה: מערכת העיכול</div>
@@ -64,6 +169,7 @@
       </div>
     </div>
 
+    <!-- שלב 3 -->
     <div class="step">
       <h2>שלב 3: תוצרים וחומרים</h2>
       <label>סוג תוצר:</label><input type="text" id="productType"><div class="example">לדוגמה: מצגת / סרטון</div>
@@ -79,6 +185,7 @@
       </div>
     </div>
 
+    <!-- שלב 4: התאמות ולומדים ודגשים נוספים -->
     <div class="step">
       <h2>שלב 4: התאמות ולומדים</h2>
       <label>בחר התאמות לתלמידים:</label>
@@ -92,28 +199,29 @@
         <label><input type="checkbox"> התאמה ל-ADHD</label>
       </div>
       <label>הערות נוספות:</label><textarea id="extraNotes"></textarea>
-      <label>שפת התוצר:</label><input type="text" id="outputLanguage"><div class="example">לדוגמה: אנגלית (אם שונה משפת ההוראה)</div>
+    <label>שפת התוצר:</label><input type="text" id="outputLanguage"><div class="example">לדוגמה: אנגלית (אם שונה משפת ההוראה)</div>
 
-      <label>איך תרצה שהתלמידים יסכמו את השיעור?</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox"> סיכום כתוב</label>
-        <label><input type="checkbox"> סיכום בציור או קומיקס</label>
-        <label><input type="checkbox"> דיון כיתתי מסכם</label>
-        <label><input type="checkbox"> מפת מושגים</label>
-      </div>
+<label>איך תרצה שהתלמידים יסכמו את השיעור?</label>
+<div class="checkbox-group">
+  <label><input type="checkbox"> סיכום כתוב</label>
+  <label><input type="checkbox"> סיכום בציור או קומיקס</label>
+  <label><input type="checkbox"> דיון כיתתי מסכם</label>
+  <label><input type="checkbox"> מפת מושגים</label>
+</div>
 
-      <label>איך תעריך את הבנת התלמידים?</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox"> בוחן קצר</label>
-        <label><input type="checkbox"> מטלת ביצוע</label>
-        <label><input type="checkbox"> פעילות משחקית</label>
-        <label><input type="checkbox"> הערכה על בסיס שיחה</label>
-      </div>
+<label>איך תעריך את הבנת התלמידים?</label>
+<div class="checkbox-group">
+  <label><input type="checkbox"> בוחן קצר</label>
+  <label><input type="checkbox"> מטלת ביצוע</label>
+  <label><input type="checkbox"> פעילות משחקית</label>
+  <label><input type="checkbox"> הערכה על בסיס שיחה</label>
+</div>
 
-      <label>כמה דוגמאות תרצה לקבל?</label>
-      <input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
-    </div>
+<label>כמה דוגמאות תרצה לקבל?</label>
+<input type="text" id="exampleCount"><div class="example">לדוגמה: 2</div>
+</div>
 
+<!-- ניווט וכפתור AI -->
     <div class="nav-buttons">
       <button onclick="prevStep()">הקודם</button>
       <button onclick="nextStep()">הבא</button>
